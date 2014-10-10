@@ -23,7 +23,7 @@ import com.wordnik.swagger.sample.model.Category;
 import com.wordnik.swagger.sample.model.Pet;
 import com.wordnik.swagger.sample.model.Tag;
 
-public class PetData {
+public class BlockData {
 	static List<Pet> pets = new ArrayList<Pet>();
 	static List<Category> categories = new ArrayList<Category>();
 
