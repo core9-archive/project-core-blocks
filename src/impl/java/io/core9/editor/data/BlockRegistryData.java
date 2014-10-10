@@ -24,23 +24,23 @@ import java.util.List;
 
 
 public class BlockRegistryData {
-	static List<BlockRegistryItem> orders = new ArrayList<BlockRegistryItem>();
+	static List<BlockRegistryItem> blockRegistryItems = new ArrayList<BlockRegistryItem>();
 
 	static {
-		orders.add(createBlockRegistryItem(1, 1, 2, new Date(), "placed"));
-		orders.add(createBlockRegistryItem(2, 1, 2, new Date(), "delivered"));
-		orders.add(createBlockRegistryItem(3, 2, 2, new Date(), "placed"));
-		orders.add(createBlockRegistryItem(4, 2, 2, new Date(), "delivered"));
-		orders.add(createBlockRegistryItem(5, 3, 2, new Date(), "placed"));
-		orders.add(createBlockRegistryItem(11, 3, 2, new Date(), "placed"));
-		orders.add(createBlockRegistryItem(12, 3, 2, new Date(), "placed"));
-		orders.add(createBlockRegistryItem(13, 3, 2, new Date(), "placed"));
-		orders.add(createBlockRegistryItem(14, 3, 2, new Date(), "placed"));
-		orders.add(createBlockRegistryItem(15, 3, 2, new Date(), "placed"));
+		blockRegistryItems.add(createBlockRegistryItem(1, 1, 2, new Date(), "placed"));
+		blockRegistryItems.add(createBlockRegistryItem(2, 1, 2, new Date(), "delivered"));
+		blockRegistryItems.add(createBlockRegistryItem(3, 2, 2, new Date(), "placed"));
+		blockRegistryItems.add(createBlockRegistryItem(4, 2, 2, new Date(), "delivered"));
+		blockRegistryItems.add(createBlockRegistryItem(5, 3, 2, new Date(), "placed"));
+		blockRegistryItems.add(createBlockRegistryItem(11, 3, 2, new Date(), "placed"));
+		blockRegistryItems.add(createBlockRegistryItem(12, 3, 2, new Date(), "placed"));
+		blockRegistryItems.add(createBlockRegistryItem(13, 3, 2, new Date(), "placed"));
+		blockRegistryItems.add(createBlockRegistryItem(14, 3, 2, new Date(), "placed"));
+		blockRegistryItems.add(createBlockRegistryItem(15, 3, 2, new Date(), "placed"));
 	}
 
 	public BlockRegistryItem findBlockRegistryItemById(long orderId) {
-		for (BlockRegistryItem order : orders) {
+		for (BlockRegistryItem order : blockRegistryItems) {
 			if (order.getId() == orderId) {
 				return order;
 			}
@@ -49,21 +49,21 @@ public class BlockRegistryData {
 	}
 
 	public void placeBlockRegistryItem(BlockRegistryItem order) {
-		if (orders.size() > 0) {
-			for (int i = orders.size() - 1; i >= 0; i--) {
-				if (orders.get(i).getId() == order.getId()) {
-					orders.remove(i);
+		if (blockRegistryItems.size() > 0) {
+			for (int i = blockRegistryItems.size() - 1; i >= 0; i--) {
+				if (blockRegistryItems.get(i).getId() == order.getId()) {
+					blockRegistryItems.remove(i);
 				}
 			}
 		}
-		orders.add(order);
+		blockRegistryItems.add(order);
 	}
 
 	public void deleteBlockRegistryItem(long orderId) {
-		if (orders.size() > 0) {
-			for (int i = orders.size() - 1; i >= 0; i--) {
-				if (orders.get(i).getId() == orderId) {
-					orders.remove(i);
+		if (blockRegistryItems.size() > 0) {
+			for (int i = blockRegistryItems.size() - 1; i >= 0; i--) {
+				if (blockRegistryItems.get(i).getId() == orderId) {
+					blockRegistryItems.remove(i);
 				}
 			}
 		}
