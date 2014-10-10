@@ -16,6 +16,11 @@
 
 package io.core9.editor.resource;
 
+import io.core9.editor.data.BlockData;
+import io.core9.editor.exception.NotFoundException;
+import io.core9.editor.model.Block;
+import io.core9.editor.model.Owner;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -30,95 +35,91 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
-import com.wordnik.swagger.sample.data.PetData;
-import com.wordnik.swagger.sample.exception.NotFoundException;
-import com.wordnik.swagger.sample.model.Owner;
-import com.wordnik.swagger.sample.model.Pet;
-import com.wordnik.swagger.sample.resource.JavaRestResourceUtil;
-import com.wordnik.swagger.sample.resource.OwnerResource;
+
+
 
 @Path("/pet")
 @Api(value = "/pet", description = "Operations about pets")
 @Produces({"application/json"})
 public class BlockResource {
-	static PetData petData = new PetData();
+	static BlockData blockData = new BlockData();
 	static JavaRestResourceUtil ru = new JavaRestResourceUtil();
 
 	@GET
 	@Path("/{petId : [0-9]}")
 	@ApiOperation(
-		value = "Find pet by ID", 
-		notes = "Returns a pet when ID < 10. ID > 10 or nonintegers will simulate API error conditions", 
-		response = Pet.class)
+		value = "Find pet by ID",
+		notes = "Returns a pet when ID < 10. ID > 10 or nonintegers will simulate API error conditions",
+		response = Block.class)
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid ID supplied"),
-			@ApiResponse(code = 404, message = "Pet not found") })
-	public Response getPetById(
+			@ApiResponse(code = 404, message = "Block not found") })
+	public Response getBlockById(
 			@ApiParam(value = "ID of pet that needs to be fetched", allowableValues = "range[1,5]", required = true) @PathParam("petId") String petId)
 			throws NotFoundException {
-		Pet pet = petData.getPetbyId(ru.getLong(0, 100000, 0, petId));
+		Block pet = blockData.getBlockbyId(ru.getLong(0, 100000, 0, petId));
 		if (null != pet) {
 			return Response.ok().entity(pet).build();
 		} else {
-			throw new NotFoundException(404, "Pet not found");
+			throw new NotFoundException(404, "Block not found");
 		}
 	}
 
 	@POST
 	@ApiOperation(value = "Add a new pet to the store")
 	@ApiResponses(value = { @ApiResponse(code = 405, message = "Invalid input") })
-	public Response addPet(
-			@ApiParam(value = "Pet object that needs to be added to the store", required = true) Pet pet) {
-		petData.addPet(pet);
+	public Response addBlock(
+			@ApiParam(value = "Block object that needs to be added to the store", required = true) Block pet) {
+		blockData.addBlock(pet);
 		return Response.ok().entity("SUCCESS").build();
 	}
 
 	@PUT
 	@ApiOperation(value = "Update an existing pet")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid ID supplied"),
-			@ApiResponse(code = 404, message = "Pet not found"),
+			@ApiResponse(code = 404, message = "Block not found"),
 			@ApiResponse(code = 405, message = "Validation exception") })
-	public Response updatePet(
-			@ApiParam(value = "Pet object that needs to be added to the store", required = true) Pet pet) {
-		petData.addPet(pet);
+	public Response updateBlock(
+			@ApiParam(value = "Block object that needs to be added to the store", required = true) Block pet) {
+		blockData.addBlock(pet);
 		return Response.ok().entity("SUCCESS").build();
 	}
 
 	@GET
 	@Path("/findByStatus")
 	@ApiOperation(
-		value = "Finds Pets by status", 
-		notes = "Multiple status values can be provided with comma seperated strings", 
-		response = Pet.class,
+		value = "Finds Blocks by status",
+		notes = "Multiple status values can be provided with comma seperated strings",
+		response = Block.class,
 		responseContainer = "List")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid status value") })
-	public Response findPetsByStatus(
+	public Response findBlocksByStatus(
 			@ApiParam(value = "Status values that need to be considered for filter", required = true, defaultValue = "available", allowableValues = "available,pending,sold", allowMultiple = true) @QueryParam("status") String status) {
-		return Response.ok(petData.findPetByStatus(status)).build();
+		return Response.ok(blockData.findBlockByStatus(status)).build();
 	}
 
 	@GET
 	@Path("/findByTags")
 	@ApiOperation(
-		value = "Finds Pets by tags", 
-		notes = "Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.", 
-		response = Pet.class, 
+		value = "Finds Blocks by tags",
+		notes = "Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.",
+		response = Block.class,
 		responseContainer = "List")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid tag value") })
 	@Deprecated
-	public Response findPetsByTags(
+	public Response findBlocksByTags(
 			@ApiParam(value = "Tags to filter by", required = true, allowMultiple = true) @QueryParam("tags") String tags) {
-		return Response.ok(petData.findPetByTags(tags)).build();
+		return Response.ok(blockData.findBlockByTags(tags)).build();
 	}
-	
+
 	@GET
 	  @Path("/{petId}/owner")
 	  @ApiOperation(
-	    value = "Gets the owner of a pet", 
+	    value = "Gets the owner of a pet",
 	    response = OwnerResource.class)
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid ID supplied"),
-			@ApiResponse(code = 404, message = "Pet not found") })
+			@ApiResponse(code = 404, message = "Block not found") })
 	  public Response getOwner(@PathParam("petId") String petId) {
-	    
+
 		Owner o = new Owner();
 	    o.setName("Tony");
 	    o.setId(1);

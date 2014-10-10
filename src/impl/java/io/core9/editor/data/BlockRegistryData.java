@@ -16,30 +16,31 @@
 
 package io.core9.editor.data;
 
+import io.core9.editor.model.BlockRegistryItem;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.wordnik.swagger.sample.model.Order;
 
 public class BlockRegistryData {
-	static List<Order> orders = new ArrayList<Order>();
+	static List<BlockRegistryItem> orders = new ArrayList<BlockRegistryItem>();
 
 	static {
-		orders.add(createOrder(1, 1, 2, new Date(), "placed"));
-		orders.add(createOrder(2, 1, 2, new Date(), "delivered"));
-		orders.add(createOrder(3, 2, 2, new Date(), "placed"));
-		orders.add(createOrder(4, 2, 2, new Date(), "delivered"));
-		orders.add(createOrder(5, 3, 2, new Date(), "placed"));
-		orders.add(createOrder(11, 3, 2, new Date(), "placed"));
-		orders.add(createOrder(12, 3, 2, new Date(), "placed"));
-		orders.add(createOrder(13, 3, 2, new Date(), "placed"));
-		orders.add(createOrder(14, 3, 2, new Date(), "placed"));
-		orders.add(createOrder(15, 3, 2, new Date(), "placed"));
+		orders.add(createBlockRegistryItem(1, 1, 2, new Date(), "placed"));
+		orders.add(createBlockRegistryItem(2, 1, 2, new Date(), "delivered"));
+		orders.add(createBlockRegistryItem(3, 2, 2, new Date(), "placed"));
+		orders.add(createBlockRegistryItem(4, 2, 2, new Date(), "delivered"));
+		orders.add(createBlockRegistryItem(5, 3, 2, new Date(), "placed"));
+		orders.add(createBlockRegistryItem(11, 3, 2, new Date(), "placed"));
+		orders.add(createBlockRegistryItem(12, 3, 2, new Date(), "placed"));
+		orders.add(createBlockRegistryItem(13, 3, 2, new Date(), "placed"));
+		orders.add(createBlockRegistryItem(14, 3, 2, new Date(), "placed"));
+		orders.add(createBlockRegistryItem(15, 3, 2, new Date(), "placed"));
 	}
 
-	public Order findOrderById(long orderId) {
-		for (Order order : orders) {
+	public BlockRegistryItem findBlockRegistryItemById(long orderId) {
+		for (BlockRegistryItem order : orders) {
 			if (order.getId() == orderId) {
 				return order;
 			}
@@ -47,7 +48,7 @@ public class BlockRegistryData {
 		return null;
 	}
 
-	public void placeOrder(Order order) {
+	public void placeBlockRegistryItem(BlockRegistryItem order) {
 		if (orders.size() > 0) {
 			for (int i = orders.size() - 1; i >= 0; i--) {
 				if (orders.get(i).getId() == order.getId()) {
@@ -58,7 +59,7 @@ public class BlockRegistryData {
 		orders.add(order);
 	}
 
-	public void deleteOrder(long orderId) {
+	public void deleteBlockRegistryItem(long orderId) {
 		if (orders.size() > 0) {
 			for (int i = orders.size() - 1; i >= 0; i--) {
 				if (orders.get(i).getId() == orderId) {
@@ -68,9 +69,9 @@ public class BlockRegistryData {
 		}
 	}
 
-	private static Order createOrder(long id, long petId, int quantity,
+	private static BlockRegistryItem createBlockRegistryItem(long id, long petId, int quantity,
 			Date shipDate, String status) {
-		Order order = new Order();
+		BlockRegistryItem order = new BlockRegistryItem();
 		order.setId(id);
 		order.setPetId(petId);
 		order.setQuantity(quantity);

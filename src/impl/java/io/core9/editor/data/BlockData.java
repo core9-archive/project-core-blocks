@@ -16,15 +16,17 @@
 
 package io.core9.editor.data;
 
+import io.core9.editor.model.Block;
+import io.core9.editor.model.Category;
+import io.core9.editor.model.Tag;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wordnik.swagger.sample.model.Category;
-import com.wordnik.swagger.sample.model.Pet;
-import com.wordnik.swagger.sample.model.Tag;
+
 
 public class BlockData {
-	static List<Pet> pets = new ArrayList<Pet>();
+	static List<Block> blocks = new ArrayList<Block>();
 	static List<Category> categories = new ArrayList<Category>();
 
 	static {
@@ -33,62 +35,62 @@ public class BlockData {
 		categories.add(createCategory(3, "Rabbits"));
 		categories.add(createCategory(4, "Lions"));
 
-		pets.add(createPet(1, categories.get(1), "Cat 1", new String[] {
+		blocks.add(createBlock(1, categories.get(1), "Cat 1", new String[] {
 				"url1", "url2" }, new String[] { "tag1", "tag2" }, "available"));
-		pets.add(createPet(2, categories.get(1), "Cat 2", new String[] {
+		blocks.add(createBlock(2, categories.get(1), "Cat 2", new String[] {
 				"url1", "url2" }, new String[] { "tag2", "tag3" }, "available"));
-		pets.add(createPet(3, categories.get(1), "Cat 3", new String[] {
+		blocks.add(createBlock(3, categories.get(1), "Cat 3", new String[] {
 				"url1", "url2" }, new String[] { "tag3", "tag4" }, "pending"));
 
-		pets.add(createPet(4, categories.get(0), "Dog 1", new String[] {
+		blocks.add(createBlock(4, categories.get(0), "Dog 1", new String[] {
 				"url1", "url2" }, new String[] { "tag1", "tag2" }, "available"));
-		pets.add(createPet(5, categories.get(0), "Dog 2", new String[] {
+		blocks.add(createBlock(5, categories.get(0), "Dog 2", new String[] {
 				"url1", "url2" }, new String[] { "tag2", "tag3" }, "sold"));
-		pets.add(createPet(6, categories.get(0), "Dog 3", new String[] {
+		blocks.add(createBlock(6, categories.get(0), "Dog 3", new String[] {
 				"url1", "url2" }, new String[] { "tag3", "tag4" }, "pending"));
 
-		pets.add(createPet(7, categories.get(3), "Lion 1", new String[] {
+		blocks.add(createBlock(7, categories.get(3), "Lion 1", new String[] {
 				"url1", "url2" }, new String[] { "tag1", "tag2" }, "available"));
-		pets.add(createPet(8, categories.get(3), "Lion 2", new String[] {
+		blocks.add(createBlock(8, categories.get(3), "Lion 2", new String[] {
 				"url1", "url2" }, new String[] { "tag2", "tag3" }, "available"));
-		pets.add(createPet(9, categories.get(3), "Lion 3", new String[] {
+		blocks.add(createBlock(9, categories.get(3), "Lion 3", new String[] {
 				"url1", "url2" }, new String[] { "tag3", "tag4" }, "available"));
 
-		pets.add(createPet(10, categories.get(2), "Rabbit 1", new String[] {
+		blocks.add(createBlock(10, categories.get(2), "Rabbit 1", new String[] {
 				"url1", "url2" }, new String[] { "tag3", "tag4" }, "available"));
 	}
 
-	public Pet getPetbyId(long petId) {
-		for (Pet pet : pets) {
-			if (pet.getId() == petId) {
-				return pet;
+	public Block getBlockbyId(long blockId) {
+		for (Block block : blocks) {
+			if (block.getId() == blockId) {
+				return block;
 			}
 		}
 		return null;
 	}
 
-	public List<Pet> findPetByStatus(String status) {
+	public List<Block> findBlockByStatus(String status) {
 		String[] statues = status.split(",");
-		List<Pet> result = new java.util.ArrayList<Pet>();
-		for (Pet pet : pets) {
+		List<Block> result = new java.util.ArrayList<Block>();
+		for (Block block : blocks) {
 			for (String s : statues) {
-				if (s.equals(pet.getStatus())) {
-					result.add(pet);
+				if (s.equals(block.getStatus())) {
+					result.add(block);
 				}
 			}
 		}
 		return result;
 	}
 
-	public List<Pet> findPetByTags(String tags) {
+	public List<Block> findBlockByTags(String tags) {
 		String[] tagList = tags.split(",");
-		List<Pet> result = new java.util.ArrayList<Pet>();
-		for (Pet pet : pets) {
-			if (null != pet.getTags()) {
-				for (Tag tag : pet.getTags()) {
+		List<Block> result = new java.util.ArrayList<Block>();
+		for (Block block : blocks) {
+			if (null != block.getTags()) {
+				for (Tag tag : block.getTags()) {
 					for (String tagListString : tagList) {
 						if (tagListString.equals(tag.getName()))
-							result.add(pet);
+							result.add(block);
 					}
 				}
 			}
@@ -96,29 +98,29 @@ public class BlockData {
 		return result;
 	}
 
-	public void addPet(Pet pet) {
-		if (pets.size() > 0) {
-			for (int i = pets.size() - 1; i >= 0; i--) {
-				if (pets.get(i).getId() == pet.getId()) {
-					pets.remove(i);
+	public void addBlock(Block block) {
+		if (blocks.size() > 0) {
+			for (int i = blocks.size() - 1; i >= 0; i--) {
+				if (blocks.get(i).getId() == block.getId()) {
+					blocks.remove(i);
 				}
 			}
 		}
-		pets.add(pet);
+		blocks.add(block);
 	}
 
-	static Pet createPet(long id, Category cat, String name, String[] urls,
+	static Block createBlock(long id, Category cat, String name, String[] urls,
 			String[] tags, String status) {
-		Pet pet = new Pet();
-		pet.setId(id);
-		pet.setCategory(cat);
-		pet.setName(name);
+		Block block = new Block();
+		block.setId(id);
+		block.setCategory(cat);
+		block.setName(name);
 		if (null != urls) {
 			List<String> urlObjs = new ArrayList<String>();
 			for (String urlString : urls) {
 				urlObjs.add(urlString);
 			}
-			pet.setPhotoUrls(urlObjs);
+			block.setPhotoUrls(urlObjs);
 		}
 		List<Tag> tagObjs = new java.util.ArrayList<Tag>();
 		int i = 0;
@@ -131,9 +133,9 @@ public class BlockData {
 				tagObjs.add(tag);
 			}
 		}
-		pet.setTags(tagObjs);
-		pet.setStatus(status);
-		return pet;
+		block.setTags(tagObjs);
+		block.setStatus(status);
+		return block;
 	}
 
 	static Category createCategory(long id, String name) {

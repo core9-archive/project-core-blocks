@@ -24,8 +24,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.wordnik.swagger.annotations.ApiModelProperty;
-import com.wordnik.swagger.sample.model.Category;
-import com.wordnik.swagger.sample.model.Tag;
+
 
 @XmlRootElement(name = "Block")
 public class Block {

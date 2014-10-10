@@ -1,5 +1,8 @@
 package io.core9.editor.connector;
 
+import io.core9.editor.resource.BlockRegistryResource;
+import io.core9.editor.resource.BlockResource;
+import io.core9.editor.resource.UserResource;
 import io.core9.plugin.rest.RestResource;
 import io.core9.plugin.rest.RestResourceConfig;
 import io.core9.plugin.rest.RestResourceConfigImpl;
@@ -11,14 +14,11 @@ import java.util.Map;
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 
 import com.wordnik.swagger.config.SwaggerConfig;
-import com.wordnik.swagger.sample.core9.connector.PetstoreRestResourceProvider;
-import com.wordnik.swagger.sample.resource.PetResource;
-import com.wordnik.swagger.sample.resource.PetStoreResource;
-import com.wordnik.swagger.sample.resource.UserResource;
+
 
 
 @PluginImplementation
-public class BlockRestResourceProviderImpl implements PetstoreRestResourceProvider {
+public class BlockRestResourceProviderImpl implements BlockRestResourceProvider {
 
 	private Map<String, RestResource> resourceMap = new HashMap<>();
 
@@ -36,9 +36,9 @@ public class BlockRestResourceProviderImpl implements PetstoreRestResourceProvid
 		restResourceConfig.setModelPackage("io.core9.model");
 
 
-		resourceMap.putAll(RestUtils.addRestResource(restResourceConfig, new PetResource()));
+		resourceMap.putAll(RestUtils.addRestResource(restResourceConfig, new BlockResource()));
 
-		resourceMap.putAll(RestUtils.addRestResource(restResourceConfig, new PetStoreResource()));
+		resourceMap.putAll(RestUtils.addRestResource(restResourceConfig, new BlockRegistryResource()));
 
 		resourceMap.putAll(RestUtils.addRestResource(restResourceConfig, new UserResource()));
 
