@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
-@XmlRootElement(name = "Order")
+@XmlRootElement(name = "BlockRegistryItem")
 public class BlockRegistryItem {
 	private long id;
 	private long petId;
@@ -69,7 +69,7 @@ public class BlockRegistryItem {
 	}
 
 	@XmlElement(name = "status")
-	@ApiModelProperty(value = "Order Status", allowableValues = "placed, approved, delivered")
+	@ApiModelProperty(value = "BlockRegistryItem Status", allowableValues = "placed, approved, delivered")
 	public String getStatus() {
 		return status;
 	}

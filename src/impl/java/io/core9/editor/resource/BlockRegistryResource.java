@@ -35,51 +35,51 @@ import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 
 
-@Path("/store")
-@Api(value="/store" , description = "Operations about store")
+@Path("/blockregistry")
+@Api(value="/blockregistry" , description = "Operations about blockregistry")
 @Produces({"application/json", "application/xml"})
 public class BlockRegistryResource {
-  static BlockRegistryData storeData = new BlockRegistryData();
+  static BlockRegistryData blockregistryData = new BlockRegistryData();
   static JavaRestResourceUtil ru = new JavaRestResourceUtil();
 
   @GET
-  @Path("/order/{orderId}")
-  @ApiOperation(value = "Find purchase order by ID",
+  @Path("/blockregistryitem/{blockregistryitemId}")
+  @ApiOperation(value = "Find purchase blockregistryitem by ID",
     notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions",
     response = BlockRegistryItem.class)
   @ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid ID supplied"),
       @ApiResponse(code = 404, message = "BlockRegistryItem not found") })
   public Response getBlockRegistryItemById(
-      @ApiParam(value = "ID of pet that needs to be fetched", allowableValues = "range[1,5]", required = true) @PathParam("orderId") String orderId)
+      @ApiParam(value = "ID of pet that needs to be fetched", allowableValues = "range[1,5]", required = true) @PathParam("blockregistryitemId") String blockregistryitemId)
       throws NotFoundException {
-    BlockRegistryItem order = storeData.findBlockRegistryItemById(ru.getLong(0, 10000, 0, orderId));
-    if (null != order) {
-      return Response.ok().entity(order).build();
+    BlockRegistryItem blockregistryitem = blockregistryData.findBlockRegistryItemById(ru.getLong(0, 10000, 0, blockregistryitemId));
+    if (null != blockregistryitem) {
+      return Response.ok().entity(blockregistryitem).build();
     } else {
       throw new NotFoundException(404, "BlockRegistryItem not found");
     }
   }
 
   @POST
-  @Path("/order")
-  @ApiOperation(value = "Place an order for a pet",
+  @Path("/blockregistryitem")
+  @ApiOperation(value = "Place an blockregistryitem for a pet",
     response = BlockRegistryItem.class)
   @ApiResponses({ @ApiResponse(code = 400, message = "Invalid BlockRegistryItem") })
   public Response placeBlockRegistryItem(
-      @ApiParam(value = "order placed for purchasing the pet", required = true) BlockRegistryItem order) {
-    storeData.placeBlockRegistryItem(order);
+      @ApiParam(value = "blockregistryitem placed for purchasing the pet", required = true) BlockRegistryItem blockregistryitem) {
+    blockregistryData.placeBlockRegistryItem(blockregistryitem);
     return Response.ok().entity("").build();
   }
 
   @DELETE
-  @Path("/order/{orderId}")
-  @ApiOperation(value = "Delete purchase order by ID",
+  @Path("/blockregistryitem/{blockregistryitemId}")
+  @ApiOperation(value = "Delete purchase blockregistryitem by ID",
     notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors")
   @ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid ID supplied"),
       @ApiResponse(code = 404, message = "BlockRegistryItem not found") })
   public Response deleteBlockRegistryItem(
-      @ApiParam(value = "ID of the order that needs to be deleted", allowableValues = "range[1,infinity]", required = true) @PathParam("orderId") String orderId) {
-    storeData.deleteBlockRegistryItem(ru.getLong(0, 10000, 0, orderId));
+      @ApiParam(value = "ID of the blockregistryitem that needs to be deleted", allowableValues = "range[1,infinity]", required = true) @PathParam("blockregistryitemId") String blockregistryitemId) {
+    blockregistryData.deleteBlockRegistryItem(ru.getLong(0, 10000, 0, blockregistryitemId));
     return Response.ok().entity("").build();
   }
 }

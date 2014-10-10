@@ -38,49 +38,49 @@ import com.wordnik.swagger.annotations.ApiResponses;
 
 
 
-@Path("/pet")
-@Api(value = "/pet", description = "Operations about pets")
+@Path("/block")
+@Api(value = "/block", description = "Operations about blocks")
 @Produces({"application/json"})
 public class BlockResource {
 	static BlockData blockData = new BlockData();
 	static JavaRestResourceUtil ru = new JavaRestResourceUtil();
 
 	@GET
-	@Path("/{petId : [0-9]}")
+	@Path("/{blockId : [0-9]}")
 	@ApiOperation(
-		value = "Find pet by ID",
-		notes = "Returns a pet when ID < 10. ID > 10 or nonintegers will simulate API error conditions",
+		value = "Find block by ID",
+		notes = "Returns a block when ID < 10. ID > 10 or nonintegers will simulate API error conditions",
 		response = Block.class)
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid ID supplied"),
 			@ApiResponse(code = 404, message = "Block not found") })
 	public Response getBlockById(
-			@ApiParam(value = "ID of pet that needs to be fetched", allowableValues = "range[1,5]", required = true) @PathParam("petId") String petId)
+			@ApiParam(value = "ID of block that needs to be fetched", allowableValues = "range[1,5]", required = true) @PathParam("blockId") String blockId)
 			throws NotFoundException {
-		Block pet = blockData.getBlockbyId(ru.getLong(0, 100000, 0, petId));
-		if (null != pet) {
-			return Response.ok().entity(pet).build();
+		Block block = blockData.getBlockbyId(ru.getLong(0, 100000, 0, blockId));
+		if (null != block) {
+			return Response.ok().entity(block).build();
 		} else {
 			throw new NotFoundException(404, "Block not found");
 		}
 	}
 
 	@POST
-	@ApiOperation(value = "Add a new pet to the store")
+	@ApiOperation(value = "Add a new block to the store")
 	@ApiResponses(value = { @ApiResponse(code = 405, message = "Invalid input") })
 	public Response addBlock(
-			@ApiParam(value = "Block object that needs to be added to the store", required = true) Block pet) {
-		blockData.addBlock(pet);
+			@ApiParam(value = "Block object that needs to be added to the store", required = true) Block block) {
+		blockData.addBlock(block);
 		return Response.ok().entity("SUCCESS").build();
 	}
 
 	@PUT
-	@ApiOperation(value = "Update an existing pet")
+	@ApiOperation(value = "Update an existing block")
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid ID supplied"),
 			@ApiResponse(code = 404, message = "Block not found"),
 			@ApiResponse(code = 405, message = "Validation exception") })
 	public Response updateBlock(
-			@ApiParam(value = "Block object that needs to be added to the store", required = true) Block pet) {
-		blockData.addBlock(pet);
+			@ApiParam(value = "Block object that needs to be added to the store", required = true) Block block) {
+		blockData.addBlock(block);
 		return Response.ok().entity("SUCCESS").build();
 	}
 
@@ -112,13 +112,13 @@ public class BlockResource {
 	}
 
 	@GET
-	  @Path("/{petId}/owner")
+	  @Path("/{blockId}/owner")
 	  @ApiOperation(
-	    value = "Gets the owner of a pet",
+	    value = "Gets the owner of a block",
 	    response = OwnerResource.class)
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid ID supplied"),
 			@ApiResponse(code = 404, message = "Block not found") })
-	  public Response getOwner(@PathParam("petId") String petId) {
+	  public Response getOwner(@PathParam("blockId") String blockId) {
 
 		Owner o = new Owner();
 	    o.setName("Tony");
