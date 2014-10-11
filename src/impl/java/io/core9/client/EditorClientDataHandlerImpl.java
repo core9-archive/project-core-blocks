@@ -7,6 +7,7 @@ import io.core9.plugin.template.closure.ClosureTemplateEngine;
 import io.core9.plugin.widgets.datahandler.DataHandler;
 import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,8 @@ import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
 
 @PluginImplementation
 public class EditorClientDataHandlerImpl implements EditorClientDataHandler<EditorClientDataHandlerConfig> {
+
+	private static final String pathPrefix = "data/editor/";
 
 	@InjectPlugin
 	private EditorClientPlugin editorClientPlugin;
@@ -62,6 +65,8 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 						}
 					}
 				}*/
+
+				new File(pathPrefix).mkdirs();
 
 				try {
 					doc = Jsoup.connect("http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html").get();
