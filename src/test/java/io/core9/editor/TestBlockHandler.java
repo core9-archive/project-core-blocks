@@ -67,6 +67,7 @@ public class TestBlockHandler {
 		setUpRequest();
 		blockHandler.setRequest(request);
 		assertFalse(blockHandler.checkPageDirectory());
+		blockHandler.deleteHostDirectory();
 		blockHandler.createPageDirectory();
 		assertTrue(blockHandler.checkPageDirectory());
 	}
