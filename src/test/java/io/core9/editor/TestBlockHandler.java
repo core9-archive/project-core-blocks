@@ -2,6 +2,8 @@ package io.core9.editor;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+
 import org.junit.Test;
 
 public class TestBlockHandler {
@@ -85,11 +87,11 @@ public class TestBlockHandler {
 
 
 	//@Test
-	public void testDownloadBlockFromGit(){
+	public void testDownloadBlockFromGit() throws FileNotFoundException{
 		setupWorkingDirectory();
 		setUpRequest();
 		blockHandler.setRequest(request);
-		blockHandler.downloadBlockFromGit("https://trimm@bitbucket.org/core9/block-video.git");
+		blockHandler.downloadBlockFromGit("https://trimm@bitbucket.org/core9/block-video.git", "password");
 		fail("TODO");
 	}
 

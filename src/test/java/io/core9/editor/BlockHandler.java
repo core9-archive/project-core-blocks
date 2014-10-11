@@ -1,5 +1,7 @@
 package io.core9.editor;
 
+import java.io.FileNotFoundException;
+
 public interface BlockHandler {
 
 
@@ -15,7 +17,7 @@ public interface BlockHandler {
 
 	String getHostId();
 
-	void downloadBlockFromGit(String httpsRepositoryUrl);
+	void downloadBlockFromGit(String httpsRepositoryUrl, String password) throws FileNotFoundException;
 
 	void createHostDirectory();
 

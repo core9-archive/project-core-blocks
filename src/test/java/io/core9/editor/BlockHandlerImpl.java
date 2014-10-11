@@ -1,6 +1,7 @@
 package io.core9.editor;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -11,7 +12,9 @@ public class BlockHandlerImpl implements BlockHandler {
 
 	private String pathPrefix;
 	private String healthFile = "health.txt";
+	private String blockDir = "blocks";
 	private Request request;
+
 
 	public BlockHandlerImpl(String pathPrefix) {
 		this.pathPrefix = pathPrefix;
@@ -133,8 +136,24 @@ public class BlockHandlerImpl implements BlockHandler {
 	}
 
 	@Override
-	public void downloadBlockFromGit(String httpsRepositoryUrl) {
+	public void downloadBlockFromGit(String httpsRepositoryUrl, String password) throws FileNotFoundException {
+		createBlockDirectory();
+		if(checkBlockDirectoryIfExists()){
+			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl, password);
+			git.pullInDirectory(pathPrefix + File.separator + getHostId() + File.separator + blockDir);
+		}else{
+			// should be directory does not exists
+			throw new FileNotFoundException(pathPrefix + File.separator + getHostId() + File.separator + blockDir);
+		}
 
+	}
+
+	private void createBlockDirectory() {
+		createDirectory(pathPrefix + File.separator + getHostId() + File.separator + blockDir);
+	}
+
+	private boolean checkBlockDirectoryIfExists() {
+		return new File(pathPrefix + File.separator + getHostId() + File.separator + blockDir).exists();
 	}
 
 }
