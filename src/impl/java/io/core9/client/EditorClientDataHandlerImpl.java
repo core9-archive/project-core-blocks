@@ -1,6 +1,7 @@
 package io.core9.client;
 
 
+
 import io.core9.plugin.server.request.Request;
 import io.core9.plugin.template.closure.ClosureTemplateEngine;
 import io.core9.plugin.widgets.datahandler.DataHandler;
@@ -15,6 +16,8 @@ import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
 @PluginImplementation
 public class EditorClientDataHandlerImpl implements EditorClientDataHandler<EditorClientDataHandlerConfig> {
 
+	@InjectPlugin
+	private EditorClientPlugin editorClientPlugin;
 
 	@InjectPlugin
 	private ClosureTemplateEngine engine;
