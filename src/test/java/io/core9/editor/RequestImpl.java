@@ -6,6 +6,7 @@ import java.net.URL;
 public class RequestImpl implements Request {
 
 	private URL urlObject;
+	private String absoluteUrl;
 
 	@Override
 	public String getHost() {
@@ -19,6 +20,7 @@ public class RequestImpl implements Request {
 
 	@Override
 	public void setAbsoluteUrl(String absoluteUrl) {
+		this.absoluteUrl = absoluteUrl;
 		try {
 			this.urlObject = new URL(absoluteUrl);
 		} catch (MalformedURLException e) {
@@ -29,6 +31,11 @@ public class RequestImpl implements Request {
 	@Override
 	public int hashCode() {
 		return urlObject.hashCode();
+	}
+
+	@Override
+	public String getAbsoluteUrl() {
+		return absoluteUrl;
 	}
 
 }

@@ -39,4 +39,6 @@ public interface BlockHandler {
 
 	boolean checkPage();
 
+	String getPage();
+
 }

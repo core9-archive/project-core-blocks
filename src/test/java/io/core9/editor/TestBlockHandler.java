@@ -81,6 +81,7 @@ public class TestBlockHandler {
 		blockHandler.setRequest(request);
 		blockHandler.downloadPage();
 		assertTrue(blockHandler.checkPage());
+		System.out.println(blockHandler.getPage());
 	}
 
 

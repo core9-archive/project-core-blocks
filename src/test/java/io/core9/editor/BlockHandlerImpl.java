@@ -1,12 +1,22 @@
 package io.core9.editor;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 public class BlockHandlerImpl implements BlockHandler {
 
@@ -15,8 +25,8 @@ public class BlockHandlerImpl implements BlockHandler {
 	private String blockDir = "blocks";
 	private Request request;
 	private String repositoryDirectory;
-
-
+	private Document page;
+	private String localHtmlPage;
 
 	public BlockHandlerImpl(String pathPrefix) {
 		this.pathPrefix = pathPrefix;
@@ -35,7 +45,7 @@ public class BlockHandlerImpl implements BlockHandler {
 		}
 	}
 
-	private void createDirectory(String directory){
+	private void createDirectory(String directory) {
 		new File(directory).mkdirs();
 	}
 
@@ -83,11 +93,9 @@ public class BlockHandlerImpl implements BlockHandler {
 		try {
 			MessageDigest crypt = MessageDigest.getInstance("SHA-1");
 			crypt.reset();
-			crypt.update(hashCode.getBytes("UTF-8"));
+			crypt.update(hashCode.getBytes(StandardCharsets.UTF_8));
 			sha1 = byteToHex(crypt.digest());
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		return sha1;
@@ -140,15 +148,15 @@ public class BlockHandlerImpl implements BlockHandler {
 	@Override
 	public void downloadBlockFromGit(String httpsRepositoryUrl) throws FileNotFoundException {
 		createBlockDirectory();
-		if(checkBlockDirectoryIfExists()){
+		if (checkBlockDirectoryIfExists()) {
 
-			String fileName = httpsRepositoryUrl.substring( httpsRepositoryUrl.lastIndexOf('/')+1, httpsRepositoryUrl.length() );
+			String fileName = httpsRepositoryUrl.substring(httpsRepositoryUrl.lastIndexOf('/') + 1, httpsRepositoryUrl.length());
 			String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
-			repositoryDirectory = "../.." + File.separator +  pathPrefix + File.separator + getHostId() + File.separator + blockDir + File.separator + fileNameWithoutExtn;
+			repositoryDirectory = "../.." + File.separator + pathPrefix + File.separator + getHostId() + File.separator + blockDir + File.separator + fileNameWithoutExtn;
 			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl, repositoryDirectory);
 			git.init();
-			//git.pull();
-		}else{
+			// git.pull();
+		} else {
 			// should be directory does not exists
 			throw new FileNotFoundException(pathPrefix + File.separator + getHostId() + File.separator + blockDir);
 		}
@@ -175,14 +183,49 @@ public class BlockHandlerImpl implements BlockHandler {
 
 	@Override
 	public void downloadPage() {
-		// TODO Auto-generated method stub
+		try {
+			page = Jsoup.connect(request.getAbsoluteUrl()).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		createPageDirectory();
+		localHtmlPage = pathPrefix + File.separator + getHostId() + File.separator + getUrlId() + File.separator + "page.html";
+		writeToFile(localHtmlPage, page.toString());
+	}
 
+	@Override
+	public String getPage() {
+		return readFile(localHtmlPage, StandardCharsets.UTF_8);
 	}
 
 	@Override
 	public boolean checkPage() {
-		// TODO Auto-generated method stub
-		return false;
+		return new File(localHtmlPage).exists();
+	}
+
+	private void writeToFile(String fileName, String content) {
+		Writer writer = null;
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), StandardCharsets.UTF_8));
+			writer.write(content);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+			}
+		}
+	}
+
+	private String readFile(String path, Charset encoding){
+		byte[] encoded = null;
+		try {
+			encoded = Files.readAllBytes(Paths.get(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new String(encoded, encoding);
 	}
 
 }
