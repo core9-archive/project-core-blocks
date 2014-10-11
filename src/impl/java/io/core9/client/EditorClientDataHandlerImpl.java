@@ -70,10 +70,10 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 					e.printStackTrace();
 				}
 
-/*				result.put("head", doc.head().toString());
-				result.put("body", doc.body().toString());*/
+				result.put("head", doc.head().toString());
+				result.put("body", doc.body().toString());
 
-				result.put("page", doc.toString());
+
 
 				return result;
 			}
