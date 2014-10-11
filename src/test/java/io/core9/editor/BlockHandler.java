@@ -9,4 +9,24 @@ public interface BlockHandler {
 
 	void deleteWorkingDirectory();
 
+	void setRequest(Request request);
+
+	String getUrlId();
+
+	String getHostId();
+
+	void downloadBlockFromGit();
+
+	void createHostDirectory();
+
+	boolean checkHostDirectory();
+
+	void deleteHostDirectory();
+
+	boolean checkPageDirectory();
+
+	void createPageDirectory();
+
+	void deletePageDirectory();
+
 }
