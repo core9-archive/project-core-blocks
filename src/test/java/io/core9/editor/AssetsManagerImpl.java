@@ -18,7 +18,7 @@ import java.util.Formatter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-public class BlockHandlerImpl implements BlockHandler {
+public class AssetsManagerImpl implements AssetsManager {
 
 	private String pathPrefix;
 	private String healthFile = "health.txt";
@@ -28,7 +28,7 @@ public class BlockHandlerImpl implements BlockHandler {
 	private Document page;
 	private String localHtmlPage;
 
-	public BlockHandlerImpl(String pathPrefix) {
+	public AssetsManagerImpl(String pathPrefix) {
 		this.pathPrefix = pathPrefix;
 	}
 

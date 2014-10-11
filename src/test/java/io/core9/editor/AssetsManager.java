@@ -2,7 +2,7 @@ package io.core9.editor;
 
 import java.io.FileNotFoundException;
 
-public interface BlockHandler {
+public interface AssetsManager {
 
 
 	boolean checkWorkingDirectory();
