@@ -75,6 +75,16 @@ public class TestBlockHandler {
 	}
 
 	@Test
+	public void testDownloadPageInPageDirectory(){
+		setupWorkingDirectory();
+		setUpRequest();
+		blockHandler.setRequest(request);
+		blockHandler.downloadPage();
+		assertTrue(blockHandler.checkPage());
+	}
+
+
+	@Test
 	public void testDeletePageDirectory(){
 		setupWorkingDirectory();
 		setUpRequest();

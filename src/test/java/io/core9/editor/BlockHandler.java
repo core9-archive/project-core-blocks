@@ -35,4 +35,8 @@ public interface BlockHandler {
 
 	boolean checkIfRepositoryDirectoryExists();
 
+	void downloadPage();
+
+	boolean checkPage();
+
 }

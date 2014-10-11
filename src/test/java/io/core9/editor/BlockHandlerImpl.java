@@ -173,4 +173,16 @@ public class BlockHandlerImpl implements BlockHandler {
 		return new File("data/git/" + repositoryDirectory).exists();
 	}
 
+	@Override
+	public void downloadPage() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean checkPage() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
