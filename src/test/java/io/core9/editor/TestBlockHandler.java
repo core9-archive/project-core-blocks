@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class TestBlockHandler {
 
-	private static final String pathPrefix = "data/editor/";
+	private static final String pathPrefix = "data/editor";
 	private BlockHandler blockHandler;
 	private RequestImpl request;
 	private String hostId = "334389048b872a533002b34d73f8c29fd09efc50";
@@ -86,13 +86,12 @@ public class TestBlockHandler {
 	}
 
 
-	//@Test
+	@Test
 	public void testDownloadBlockFromGit() throws FileNotFoundException{
 		setupWorkingDirectory();
 		setUpRequest();
 		blockHandler.setRequest(request);
-		blockHandler.downloadBlockFromGit("https://trimm@bitbucket.org/core9/block-video.git");
-		fail("TODO");
+		blockHandler.downloadBlockFromGit("https://github.com/jessec/block-video.git");
 	}
 
 	@Test

@@ -16,6 +16,7 @@ public class BlockHandlerImpl implements BlockHandler {
 	private Request request;
 
 
+
 	public BlockHandlerImpl(String pathPrefix) {
 		this.pathPrefix = pathPrefix;
 	}
@@ -139,8 +140,13 @@ public class BlockHandlerImpl implements BlockHandler {
 	public void downloadBlockFromGit(String httpsRepositoryUrl) throws FileNotFoundException {
 		createBlockDirectory();
 		if(checkBlockDirectoryIfExists()){
-			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl);
-			git.pullInDirectory(pathPrefix + File.separator + getHostId() + File.separator + blockDir);
+
+			String fileName = httpsRepositoryUrl.substring( httpsRepositoryUrl.lastIndexOf('/')+1, httpsRepositoryUrl.length() );
+			String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
+
+			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl, "../../" + File.separator +  pathPrefix + File.separator + getHostId() + File.separator + blockDir + File.separator + fileNameWithoutExtn);
+			git.init();
+			//git.pull();
 		}else{
 			// should be directory does not exists
 			throw new FileNotFoundException(pathPrefix + File.separator + getHostId() + File.separator + blockDir);
