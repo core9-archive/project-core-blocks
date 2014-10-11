@@ -15,7 +15,7 @@ public interface BlockHandler {
 
 	String getHostId();
 
-	void downloadBlockFromGit();
+	void downloadBlockFromGit(String httpsRepositoryUrl);
 
 	void createHostDirectory();
 

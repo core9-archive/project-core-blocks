@@ -132,4 +132,9 @@ public class BlockHandlerImpl implements BlockHandler {
 		deleteDirectory(new File(pathPrefix + File.separator + getHostId() + File.separator + getUrlId()));
 	}
 
+	@Override
+	public void downloadBlockFromGit(String httpsRepositoryUrl) {
+
+	}
+
 }
