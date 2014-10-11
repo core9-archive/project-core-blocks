@@ -67,12 +67,14 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 				}*/
 
 
+				String url = "http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html";
+				String urlFileName = url.replace("/", "_");
 
-				createFileInDataDir("test.json");
+				createFileInDataDir(urlFileName);
 
 
 				try {
-					doc = Jsoup.connect("http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html").get();
+					doc = Jsoup.connect(url).get();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
