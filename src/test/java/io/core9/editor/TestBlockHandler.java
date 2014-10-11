@@ -15,7 +15,7 @@ public class TestBlockHandler {
 		assertTrue(blockHandler.checkWorkingDirectory());
 	}
 
-	//@Test
+	@Test
 	public void testDeleteWorkingDirectory(){
 		BlockHandler blockHandler = new BlockHandlerImpl(pathPrefix);
 		blockHandler.createWorkingDirectory();
