@@ -7,8 +7,12 @@ import io.core9.plugin.template.closure.ClosureTemplateEngine;
 import io.core9.plugin.widgets.datahandler.DataHandler;
 import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
@@ -37,6 +41,8 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 		final EditorClientDataHandlerConfig config = (EditorClientDataHandlerConfig) options;
 		return new DataHandler<EditorClientDataHandlerConfig>() {
 
+			private Document doc;
+
 			@Override
 			public Map<String, Object> handle(Request req) {
 
@@ -56,7 +62,18 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 						}
 					}
 				}*/
-				result.put("data", "test");
+
+				try {
+					doc = Jsoup.connect("http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html").get();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+/*				result.put("head", doc.head().toString());
+				result.put("body", doc.body().toString());*/
+
+				result.put("page", doc.toString());
 
 				return result;
 			}
