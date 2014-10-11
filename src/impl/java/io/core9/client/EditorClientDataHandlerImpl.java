@@ -105,29 +105,5 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 		};
 	}
 
-	/**
-	 * Setup and set the email message
-	 * @param config
-	 * @param req
-	 */
-	@SuppressWarnings("unused")
-	protected void sendMail(final EditorClientDataHandlerConfig config, final Request req) {
 
-		Map<String,Object> body = req.getBodyAsMap().toBlocking().last();
-		try {
-/*			message.setSubject((String) body.getOrDefault("subject", config.getSubject()));
-			try {
-				message.setText(engine.render(req.getVirtualHost(), config.getTemplate(), body), "utf-8", "html");
-			} catch (Exception e) {
-				message.setText(body.toString());
-			}
-			message.setFrom(new InternetAddress((String) body.getOrDefault("from", config.getFrom())));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(config.getTo()));
-			mailer.send(profile, message);*/
-		} catch (Exception e) {
-			e.printStackTrace();
-			req.getResponse().setStatusCode(500);
-			req.getResponse().end("Something went wrong: " + e.getMessage());
-		}
-	}
 }
