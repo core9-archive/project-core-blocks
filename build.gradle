@@ -25,6 +25,9 @@ dependencies {
   compile 'com.google.jimfs:jimfs:1.0'
   compile 'com.google.code.gson:gson:2.3'
 
+    // Rest
+  compile 'io.core9:module-rest-api:+'
+
 
   // Core
   compile 'io.core9:core:+'
