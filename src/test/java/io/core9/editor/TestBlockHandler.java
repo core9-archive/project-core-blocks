@@ -108,6 +108,17 @@ public class TestBlockHandler {
 	}
 
 	@Test
+	public void testDownloadPagesFromGit() throws FileNotFoundException, InterruptedException{
+		setupWorkingDirectory();
+		setUpRequest();
+		blockHandler.setRequest(request);
+		blockHandler.downloadPagesFromGit("https://github.com/jessec/site-core9.git");
+		blockHandler.getPagesRepositoryDirectory();
+		//assertTrue(blockHandler.checkIfRepositoryDirectoryExists());
+	}
+
+
+	@Test
 	public void testCreateWorkingDirectory() {
 		BlockHandler blockHandler = new BlockHandlerImpl(pathPrefix);
 		blockHandler.createWorkingDirectory();

@@ -228,4 +228,16 @@ public class BlockHandlerImpl implements BlockHandler {
 		return new String(encoded, encoding);
 	}
 
+	@Override
+	public void downloadPagesFromGit(String httpsRepositoryUrl) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getPagesRepositoryDirectory() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

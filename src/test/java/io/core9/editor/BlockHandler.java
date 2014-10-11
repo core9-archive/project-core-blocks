@@ -41,4 +41,8 @@ public interface BlockHandler {
 
 	String getPage();
 
+	void downloadPagesFromGit(String httpsRepositoryUrl);
+
+	void getPagesRepositoryDirectory();
+
 }
