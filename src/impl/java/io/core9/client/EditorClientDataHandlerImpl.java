@@ -56,6 +56,8 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 						}
 					}
 				}*/
+				result.put("data", "test");
+
 				return result;
 			}
 
