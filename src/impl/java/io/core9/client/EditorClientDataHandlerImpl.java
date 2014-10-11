@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 @PluginImplementation
 public class EditorClientDataHandlerImpl implements EditorClientDataHandler<EditorClientDataHandlerConfig> {
@@ -66,12 +66,14 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 					}
 				}*/
 
-				new File(pathPrefix).mkdirs();
+
+
+				createFileInDataDir("test.json");
+
 
 				try {
 					doc = Jsoup.connect("http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html").get();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -81,6 +83,18 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 
 
 				return result;
+			}
+
+			private void createFileInDataDir(String fileName) {
+				new File(pathPrefix).mkdirs();
+				File yourFile = new File(pathPrefix + "/" + fileName);
+				if(!yourFile.exists()) {
+				    try {
+						yourFile.createNewFile();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 
 			@Override
