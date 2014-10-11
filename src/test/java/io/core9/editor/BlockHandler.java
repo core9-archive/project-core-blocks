@@ -31,4 +31,8 @@ public interface BlockHandler {
 
 	void deletePageDirectory();
 
+	String getRepositoryDirectory();
+
+	boolean checkIfRepositoryDirectoryExists();
+
 }

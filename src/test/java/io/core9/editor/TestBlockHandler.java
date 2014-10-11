@@ -87,11 +87,13 @@ public class TestBlockHandler {
 
 
 	@Test
-	public void testDownloadBlockFromGit() throws FileNotFoundException{
+	public void testDownloadBlockFromGit() throws FileNotFoundException, InterruptedException{
 		setupWorkingDirectory();
 		setUpRequest();
 		blockHandler.setRequest(request);
 		blockHandler.downloadBlockFromGit("https://github.com/jessec/block-video.git");
+		blockHandler.getRepositoryDirectory();
+		assertTrue(blockHandler.checkIfRepositoryDirectoryExists());
 	}
 
 	@Test

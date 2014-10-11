@@ -14,6 +14,7 @@ public class BlockHandlerImpl implements BlockHandler {
 	private String healthFile = "health.txt";
 	private String blockDir = "blocks";
 	private Request request;
+	private String repositoryDirectory;
 
 
 
@@ -143,8 +144,8 @@ public class BlockHandlerImpl implements BlockHandler {
 
 			String fileName = httpsRepositoryUrl.substring( httpsRepositoryUrl.lastIndexOf('/')+1, httpsRepositoryUrl.length() );
 			String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
-
-			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl, "../../" + File.separator +  pathPrefix + File.separator + getHostId() + File.separator + blockDir + File.separator + fileNameWithoutExtn);
+			repositoryDirectory = "../.." + File.separator +  pathPrefix + File.separator + getHostId() + File.separator + blockDir + File.separator + fileNameWithoutExtn;
+			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl, repositoryDirectory);
 			git.init();
 			//git.pull();
 		}else{
@@ -160,6 +161,16 @@ public class BlockHandlerImpl implements BlockHandler {
 
 	private boolean checkBlockDirectoryIfExists() {
 		return new File(pathPrefix + File.separator + getHostId() + File.separator + blockDir).exists();
+	}
+
+	@Override
+	public String getRepositoryDirectory() {
+		return repositoryDirectory;
+	}
+
+	@Override
+	public boolean checkIfRepositoryDirectoryExists() {
+		return new File("data/git/" + repositoryDirectory).exists();
 	}
 
 }
