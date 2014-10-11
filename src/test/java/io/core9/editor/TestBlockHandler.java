@@ -91,7 +91,7 @@ public class TestBlockHandler {
 		setupWorkingDirectory();
 		setUpRequest();
 		blockHandler.setRequest(request);
-		blockHandler.downloadBlockFromGit("https://trimm@bitbucket.org/core9/block-video.git", "password");
+		blockHandler.downloadBlockFromGit("https://trimm@bitbucket.org/core9/block-video.git");
 		fail("TODO");
 	}
 

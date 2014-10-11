@@ -17,7 +17,7 @@ public interface BlockHandler {
 
 	String getHostId();
 
-	void downloadBlockFromGit(String httpsRepositoryUrl, String password) throws FileNotFoundException;
+	void downloadBlockFromGit(String httpsRepositoryUrl) throws FileNotFoundException;
 
 	void createHostDirectory();
 

@@ -136,10 +136,10 @@ public class BlockHandlerImpl implements BlockHandler {
 	}
 
 	@Override
-	public void downloadBlockFromGit(String httpsRepositoryUrl, String password) throws FileNotFoundException {
+	public void downloadBlockFromGit(String httpsRepositoryUrl) throws FileNotFoundException {
 		createBlockDirectory();
 		if(checkBlockDirectoryIfExists()){
-			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl, password);
+			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl);
 			git.pullInDirectory(pathPrefix + File.separator + getHostId() + File.separator + blockDir);
 		}else{
 			// should be directory does not exists

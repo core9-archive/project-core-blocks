@@ -2,7 +2,7 @@ package io.core9.editor;
 
 public class GitHandlerImpl implements GitHandler {
 
-	public GitHandlerImpl(String httpsRepositoryUrl, String password) {
+	public GitHandlerImpl(String httpsRepositoryUrl) {
 		// TODO Auto-generated constructor stub
 	}
 
