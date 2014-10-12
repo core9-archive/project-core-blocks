@@ -76,6 +76,11 @@ public class BlockResource {
 
 		JSONObject data = (JSONObject) JSONValue.parse(block.getData());
 		System.out.println(data);
+
+		BlockTool blockTool = new BlockToolImpl();
+		blockTool.setData(data);
+		String status = blockTool.getResponse();
+
 		return Response.ok().entity("SUCCESS").build();
 	}
 
