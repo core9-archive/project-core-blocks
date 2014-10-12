@@ -5,10 +5,15 @@ import java.io.FileNotFoundException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import com.google.template.soy.SoyFileSet;
+import com.google.template.soy.tofu.SoyTofu;
 
 import io.core9.editor.AssetsManager;
 import io.core9.editor.AssetsManagerImpl;
 import io.core9.editor.Block;
+import io.core9.editor.BlockImpl;
 import io.core9.editor.ClientRepository;
 import io.core9.editor.ClientRepositoryImpl;
 import io.core9.editor.PageParser;
@@ -87,16 +92,18 @@ public class BlockToolImpl implements BlockTool {
 			if (testPage.exists()) {
 				parser = new PageParserImpl(testPage, blockContainer, blockClassName);
 
-				Block block = parser.getBlock(3);
 
-				parser.insertBlock(3, block);
-				parser.insertBlock(3, block);
+				Block block = new BlockImpl();
 
-				parser.insertBlock(3, block);
-				parser.insertBlock(3, block);
-				parser.insertBlock(3, block);
+				String blockTemplate = meta.getAsString("template");
+				Element elem = parseSoyTemplateToElement(assetsManager.getClientId(), blockTemplate , editorData);
 
-				parser.deleteBlock(7);
+
+
+				block.addElement(elem);
+
+
+				parser.replaceBlock(Integer.parseInt((String) meta.get("block")), block );
 
 				String htmlTemplate = parser.getPage();
 				System.out.println(htmlTemplate);
@@ -106,6 +113,24 @@ public class BlockToolImpl implements BlockTool {
 				// save the compiled page as cache.html
 			}
 		}
+	}
+
+	private Element parseSoyTemplateToElement(String clientId, String blockTemplate, JSONObject data) {
+		 // Bundle the Soy files for your project into a SoyFileSet.
+
+		String blockDirectory = assetsManager.getBlockRepositoryDirectory();
+
+		String soyTemplate = blockDirectory + blockTemplate;
+
+	    SoyFileSet sfs = new SoyFileSet.Builder().add(new File(soyTemplate)).build();
+
+	    // Compile the template into a SoyTofu object.
+	    // SoyTofu's newRenderer method returns an object that can render any template in the file set.
+	    SoyTofu tofu = sfs.compileToTofu();
+
+	    // Render the template with no data.
+	    System.out.println(tofu.newRenderer("examples.simple.helloWorld").render());
+		return null;
 	}
 
 	@Override

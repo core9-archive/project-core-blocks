@@ -83,7 +83,7 @@ public class TestAssetManager {
 		setUpRequest();
 		assetsManager.setRequest(request);
 		assetsManager.cloneBlocksFromGit("https://github.com/jessec/block-video.git");
-		assetsManager.getRepositoryDirectory();
+
 		assertTrue(assetsManager.checkIfRepositoryDirectoryExists());
 	}
 

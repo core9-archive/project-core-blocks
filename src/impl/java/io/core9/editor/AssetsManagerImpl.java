@@ -169,7 +169,7 @@ public class AssetsManagerImpl implements AssetsManager {
 	}
 
 	private void createBlockDirectory() {
-		createDirectory(pathPrefix + File.separator + getClientId() + File.separator + blockDir);
+		createDirectory(getBlockRepositoryDirectory());
 	}
 
 	private boolean checkBlockDirectoryIfExists() {
@@ -177,8 +177,8 @@ public class AssetsManagerImpl implements AssetsManager {
 	}
 
 	@Override
-	public String getRepositoryDirectory() {
-		return blockRepositoryDirectory;
+	public String getBlockRepositoryDirectory() {
+		return blockRepositoryDirectory = pathPrefix + File.separator + getClientId() + File.separator + blockDir;
 	}
 
 	@Override
@@ -267,5 +267,7 @@ public class AssetsManagerImpl implements AssetsManager {
 	public String getPageTemplate() {
 		return "data/git/" +getPageTemplatePath();
 	}
+
+
 
 }

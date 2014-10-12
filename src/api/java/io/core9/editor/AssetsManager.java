@@ -33,7 +33,7 @@ public interface AssetsManager {
 
 	void deleteSiteDirectory();
 
-	String getRepositoryDirectory();
+	String getBlockRepositoryDirectory();
 
 	boolean checkIfRepositoryDirectoryExists();
 
@@ -50,5 +50,7 @@ public interface AssetsManager {
 	String getPageTemplate();
 
 	boolean checkIfPageTemplateExists();
+
+
 
 }
