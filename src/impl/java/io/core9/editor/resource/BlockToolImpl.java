@@ -8,6 +8,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.google.template.soy.SoyFileSet;
+import com.google.template.soy.data.SoyData;
+import com.google.template.soy.data.SoyMapData;
 import com.google.template.soy.tofu.SoyTofu;
 
 import io.core9.editor.AssetsManager;
@@ -16,6 +18,7 @@ import io.core9.editor.Block;
 import io.core9.editor.BlockImpl;
 import io.core9.editor.ClientRepository;
 import io.core9.editor.ClientRepositoryImpl;
+import io.core9.editor.JsonSoyUtils;
 import io.core9.editor.PageParser;
 import io.core9.editor.PageParserImpl;
 import io.core9.editor.RequestImpl;
@@ -118,6 +121,14 @@ public class BlockToolImpl implements BlockTool {
 	private Element parseSoyTemplateToElement(String clientId, String blockTemplate, JSONObject data) {
 		 // Bundle the Soy files for your project into a SoyFileSet.
 
+		String[] tpl = blockTemplate.split("/");
+
+		String name = tpl[tpl.length - 1];
+		String[] nm = name.split("\\.");
+		String x = nm[0];
+
+		String soyNameSpace = x.replace("-", ".");
+
 		String blockDirectory = assetsManager.getBlockRepositoryDirectory();
 
 		String soyTemplate = blockDirectory + blockTemplate;
@@ -128,8 +139,11 @@ public class BlockToolImpl implements BlockTool {
 	    // SoyTofu's newRenderer method returns an object that can render any template in the file set.
 	    SoyTofu tofu = sfs.compileToTofu();
 
-	    // Render the template with no data.
-	    System.out.println(tofu.newRenderer("examples.simple.helloWorld").render());
+
+	    SoyMapData soyData = (SoyMapData) JsonSoyUtils.JsonToSoy(data.toJSONString());
+
+	    System.out.println(tofu.newRenderer(soyNameSpace).setData(soyData).render());
+	    //.setData(new SoyMapData("name", "Ana")).render());
 		return null;
 	}
 
