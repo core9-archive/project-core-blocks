@@ -62,8 +62,7 @@ public class TestSoyJsonTemplates {
 	}
 
 
-	@Test
-	public void testCloneSiteAndBlocksFromGit() {
+	public void setupSiteAndBlocksFromGit() {
 		setupWorkingDirectory();
 		setupBlocksFromPage();
 		setUpRequest();
