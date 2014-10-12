@@ -81,16 +81,18 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 				clientRepository.addDomain("localhost", "easydrain");
 				request = new RequestImpl();
 				request.setClientRepository(clientRepository);
-				request.setAbsoluteUrl("http://localhost:8080/easydrain");
+				request.setAbsoluteUrl("http://localhost:8080/nl/easydrain");
 
 				assetsManager.setRequest(request);
 
 
 
+
+
 				String url = "http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html";
 
-				File siteConfig = new File("sdf");
-				if (siteConfig.exists()) {
+				File siteConfig = new File(assetsManager.getSiteConfigFile());
+				if (!siteConfig.exists()) {
 
 					assetsManager.createClientDirectory();
 

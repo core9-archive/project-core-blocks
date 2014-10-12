@@ -236,7 +236,7 @@ public class AssetsManagerImpl implements AssetsManager {
 
 	@Override
 	public String getSiteConfigFile() {
-		siteConfigFile = "data/git" + File.separator + siteRepositoryDirectory + File.separator + "site.json";
+		siteConfigFile = "data/git" + File.separator + getSiteRepositoryDirectory() + File.separator + "site.json";
 		return siteConfigFile;
 	}
 
