@@ -48,7 +48,9 @@ public class AssetsManagerImpl implements AssetsManager {
 	}
 
 	private void createDirectory(String directory) {
-		new File(directory).mkdirs();
+		if(!new File(directory).exists()){
+			new File(directory).mkdirs();
+		}
 	}
 
 	@Override

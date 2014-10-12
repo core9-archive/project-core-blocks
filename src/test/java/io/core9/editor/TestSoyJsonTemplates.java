@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class TestSoyJsonTemplates {
 	private AssetsManager assetsManager;
 	private RequestImpl request;
 	private String absoluteUrl = "http://localhost:8080/easydrain";
-	private String httpsPagesRepositoryUrl = "https://github.com/jessec/site-core9.git";
+	private String httpsSiteRepositoryUrl = "https://github.com/jessec/site-core9.git";
+	private String httpsBlockRepositoryUrl = "https://github.com/jessec/block-video.git";
 	private ClientRepository clientRepository;
 
 	private void setupWorkingDirectory() {
@@ -61,7 +63,7 @@ public class TestSoyJsonTemplates {
 
 
 	@Test
-	public void test() {
+	public void testCloneSiteFromGit() {
 		setupWorkingDirectory();
 		setupBlocksFromPage();
 		setUpRequest();
@@ -69,9 +71,26 @@ public class TestSoyJsonTemplates {
 		assetsManager.setRequest(request);
 		assetsManager.createClientDirectory();
 
-		assetsManager.clonePublicSiteFromGit(httpsPagesRepositoryUrl);
+		assetsManager.clonePublicSiteFromGit(httpsSiteRepositoryUrl);
 		JSONObject config = assetsManager.getSiteConfig();
 		System.out.println(config);
+
+	}
+
+	@Test
+	public void testCloneBlocksFromGit() {
+		setupWorkingDirectory();
+		setupBlocksFromPage();
+		setUpRequest();
+
+		assetsManager.setRequest(request);
+		assetsManager.createClientDirectory();
+
+		try {
+			assetsManager.cloneBlocksFromGit(httpsBlockRepositoryUrl);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 
 	}
 
