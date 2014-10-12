@@ -15,8 +15,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import net.minidev.json.JSONObject;
+import net.minidev.json.JSONValue;
+import net.minidev.json.parser.ParseException;
 
 public class AssetsManagerImpl implements AssetsManager {
 
@@ -24,9 +25,10 @@ public class AssetsManagerImpl implements AssetsManager {
 	private String healthFile = "health.txt";
 	private String blockDir = "blocks";
 	private Request request;
-	private String repositoryDirectory;
-	private Document page;
-	private String localHtmlPage;
+	private String blockRepositoryDirectory;
+	private String siteRepositoryDirectory;
+	private String siteDir = "site";
+	private String siteConfigFile;
 
 	public AssetsManagerImpl(String pathPrefix) {
 		this.pathPrefix = pathPrefix;
@@ -116,17 +118,17 @@ public class AssetsManagerImpl implements AssetsManager {
 	}
 
 	@Override
-	public void createHostDirectory() {
+	public void createClientDirectory() {
 		createDirectory(pathPrefix + File.separator + getClientId());
 	}
 
 	@Override
-	public boolean checkHostDirectory() {
+	public boolean checkClientDirectory() {
 		return new File(pathPrefix + File.separator + getClientId()).exists();
 	}
 
 	@Override
-	public void deleteHostDirectory() {
+	public void deleteClientDirectory() {
 		deleteDirectory(new File(pathPrefix + File.separator + getClientId()));
 	}
 
@@ -149,18 +151,19 @@ public class AssetsManagerImpl implements AssetsManager {
 	public void cloneBlocksFromGit(String httpsRepositoryUrl) throws FileNotFoundException {
 		createBlockDirectory();
 		if (checkBlockDirectoryIfExists()) {
-
 			String fileName = httpsRepositoryUrl.substring(httpsRepositoryUrl.lastIndexOf('/') + 1, httpsRepositoryUrl.length());
 			String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
-			repositoryDirectory = "../.." + File.separator + pathPrefix + File.separator + getClientId() + File.separator + blockDir + File.separator + fileNameWithoutExtn;
-			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl, repositoryDirectory);
-			git.init();
-			// git.pull();
+			blockRepositoryDirectory = "../.." + File.separator + pathPrefix + File.separator + getClientId() + File.separator + blockDir + File.separator + fileNameWithoutExtn;
+			clonePublicGitRepository(httpsRepositoryUrl, blockRepositoryDirectory);
 		} else {
-			// should be directory does not exists
 			throw new FileNotFoundException(pathPrefix + File.separator + getClientId() + File.separator + blockDir);
 		}
 
+	}
+
+	private void clonePublicGitRepository(String httpsRepositoryUrl, String repositoryDirectory) {
+		GitHandler git = new GitHandlerImpl(httpsRepositoryUrl, repositoryDirectory);
+		git.init();
 	}
 
 	private void createBlockDirectory() {
@@ -173,26 +176,32 @@ public class AssetsManagerImpl implements AssetsManager {
 
 	@Override
 	public String getRepositoryDirectory() {
-		return repositoryDirectory;
+		return blockRepositoryDirectory;
 	}
 
 	@Override
 	public boolean checkIfRepositoryDirectoryExists() {
-		return new File("data/git/" + repositoryDirectory).exists();
-	}
-
-
-
-	@Override
-	public String getPage() {
-		return readFile(localHtmlPage, StandardCharsets.UTF_8);
+		return new File("data/git/" + blockRepositoryDirectory).exists();
 	}
 
 	@Override
-	public boolean checkPage() {
-		return new File(localHtmlPage).exists();
+	public JSONObject getSiteConfig() {
+		String config = readFile(siteConfigFile, StandardCharsets.UTF_8);
+		JSONObject obj = new JSONObject();
+		try {
+			obj = (JSONObject) JSONValue.parseStrict(config);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return obj;
 	}
 
+	@Override
+	public boolean checkSite() {
+		return new File(siteConfigFile).exists();
+	}
+
+	@SuppressWarnings("unused")
 	private void writeToFile(String fileName, String content) {
 		Writer writer = null;
 		try {
@@ -208,7 +217,7 @@ public class AssetsManagerImpl implements AssetsManager {
 		}
 	}
 
-	private String readFile(String path, Charset encoding){
+	private String readFile(String path, Charset encoding) {
 		byte[] encoded = null;
 		try {
 			encoded = Files.readAllBytes(Paths.get(path));
@@ -219,26 +228,15 @@ public class AssetsManagerImpl implements AssetsManager {
 	}
 
 	@Override
-	public void cloneSiteFromGit(String httpsRepositoryUrl) {
-		// TODO Auto-generated method stub
-
+	public void clonePublicSiteFromGit(String httpsRepositoryUrl) {
+		siteRepositoryDirectory = "../.." + File.separator + pathPrefix + File.separator + getClientId() + File.separator + siteDir;
+		siteConfigFile = "data/git" + File.separator + siteRepositoryDirectory + File.separator + "site.json";
+		clonePublicGitRepository(httpsRepositoryUrl, siteRepositoryDirectory);
 	}
 
 	@Override
-	public void getSiteRepositoryDirectory() {
-		// TODO Auto-generated method stub
-
+	public String getSiteRepositoryDirectory() {
+		return siteRepositoryDirectory;
 	}
 
-/*	@Override
-	public void downloadPage() {
-		try {
-			page = Jsoup.connect(request.getAbsoluteUrl()).get();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		createSiteDirectory();
-		//localHtmlPage = pathPrefix + File.separator + getHostId() + File.separator + getUrlId() + File.separator + "page.html";
-		//writeToFile(localHtmlPage, page.toString());
-	}*/
 }

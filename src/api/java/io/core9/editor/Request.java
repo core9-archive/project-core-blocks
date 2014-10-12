@@ -12,4 +12,6 @@ public interface Request {
 
 	String getClient();
 
+	void setClientRepository(ClientRepository clientRepository);
+
 }

@@ -11,9 +11,10 @@ public class TestAssetManager {
 
 	private static final String pathPrefix = "data/test-editor";
 	private AssetsManager assetsManager;
-	private RequestImpl request;
-	private String hostId = "334389048b872a533002b34d73f8c29fd09efc50";
-	private String urlId = "a8132caf2be3cf0114a96482d8f8799d192d9583";
+	private Request request;
+	private String clientId = "9a8eccd84f9c40c791281139a87da7b645f25fab";
+	private String urlId = "1b8b414deda107596d4fb4af7968a1122a654794";
+	private ClientRepositoryImpl clientRepository;
 
 	private void setupWorkingDirectory() {
 		assetsManager = new AssetsManagerImpl(pathPrefix);
@@ -24,8 +25,12 @@ public class TestAssetManager {
 	}
 
 	private void setUpRequest() {
+		clientRepository = new ClientRepositoryImpl();
+		clientRepository.addDomain("www.easydrain.nl", "easydrain");
+		clientRepository.addDomain("localhost", "easydrain");
 		request = new RequestImpl();
-		request.setAbsoluteUrl("http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html");
+		request.setClientRepository(clientRepository);
+		request.setAbsoluteUrl("http://localhost:8080/easydrain");
 	}
 
 	@AfterClass
@@ -44,56 +49,32 @@ public class TestAssetManager {
 	}
 
 	@Test
-	public void testCreateIdFromHost() {
+	public void testCreateIdFromClient() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assertTrue(hostId.equals(assetsManager.getClientId()));
+		assertTrue(clientId.equals(assetsManager.getClientId()));
 	}
 
 	@Test
-	public void testCreateHostDirectory() {
+	public void testCreateClientDirectory() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assertFalse(assetsManager.checkHostDirectory());
-		assetsManager.createHostDirectory();
-		assertTrue(assetsManager.checkHostDirectory());
+		assertFalse(assetsManager.checkClientDirectory());
+		assetsManager.createClientDirectory();
+		assertTrue(assetsManager.checkClientDirectory());
 	}
 
 	@Test
-	public void testDeleteHostDirectory() {
+	public void testDeleteClientDirectory() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assetsManager.createHostDirectory();
-		assertTrue(assetsManager.checkHostDirectory());
-		assetsManager.deleteHostDirectory();
-		assertFalse(assetsManager.checkHostDirectory());
-	}
-
-	@Test
-	public void testCreatePageDirectory() {
-		setupWorkingDirectory();
-		setUpRequest();
-		assetsManager.setRequest(request);
-		assertFalse(assetsManager.checkSiteDirectory());
-		assetsManager.deleteHostDirectory();
-		assetsManager.createSiteDirectory();
-		assertTrue(assetsManager.checkSiteDirectory());
-	}
-
-
-
-	@Test
-	public void testDeletePageDirectory() {
-		setupWorkingDirectory();
-		setUpRequest();
-		assetsManager.setRequest(request);
-		assetsManager.createSiteDirectory();
-		assertTrue(assetsManager.checkSiteDirectory());
-		assetsManager.deleteSiteDirectory();
-		assertFalse(assetsManager.checkSiteDirectory());
+		assetsManager.createClientDirectory();
+		assertTrue(assetsManager.checkClientDirectory());
+		assetsManager.deleteClientDirectory();
+		assertFalse(assetsManager.checkClientDirectory());
 	}
 
 	@Test
@@ -107,24 +88,39 @@ public class TestAssetManager {
 	}
 
 	@Test
-	public void testPullPagesFromGit() {
+	public void testCreateSiteDirectory() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assetsManager.cloneSiteFromGit("https://github.com/jessec/site-core9.git");
-		assertTrue(assetsManager.checkPage());
-		System.out.println(assetsManager.getPage());
+		assertFalse(assetsManager.checkSiteDirectory());
+		assetsManager.deleteClientDirectory();
+		assetsManager.createSiteDirectory();
+		assertTrue(assetsManager.checkSiteDirectory());
+	}
+
+
+
+	@Test
+	public void testDeleteSiteDirectory() {
+		setupWorkingDirectory();
+		setUpRequest();
+		assetsManager.setRequest(request);
+		assetsManager.createSiteDirectory();
+		assertTrue(assetsManager.checkSiteDirectory());
+		assetsManager.deleteSiteDirectory();
+		assertFalse(assetsManager.checkSiteDirectory());
 	}
 
 	@Test
-	public void testDownloadPagesFromGit() throws FileNotFoundException, InterruptedException {
+	public void testCloneSiteFromGit() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assetsManager.cloneSiteFromGit("https://github.com/jessec/site-core9.git");
-		assetsManager.getSiteRepositoryDirectory();
-		// assertTrue(blockHandler.checkIfRepositoryDirectoryExists());
+		assetsManager.clonePublicSiteFromGit("https://github.com/jessec/site-core9.git");
+		assertTrue(assetsManager.checkSite());
+		System.out.println(assetsManager.getSiteConfig());
 	}
+
 
 	@Test
 	public void testCreateWorkingDirectory() {

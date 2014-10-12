@@ -48,9 +48,9 @@ public class TestSoyJsonTemplates {
 		request = new RequestImpl();
 		request.setAbsoluteUrl(absoluteUrl);
 		assetsManager.setRequest(request);
-		assetsManager.createHostDirectory();
+		assetsManager.createClientDirectory();
 
-		assetsManager.cloneSiteFromGit(httpsPagesRepositoryUrl);
+		assetsManager.clonePublicSiteFromGit(httpsPagesRepositoryUrl);
 	}
 
 }

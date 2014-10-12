@@ -7,6 +7,7 @@ public class RequestImpl implements Request {
 
 	private URL urlObject;
 	private String absoluteUrl;
+	private ClientRepository clientRepository;
 
 	@Override
 	public String getHost() {
@@ -40,8 +41,11 @@ public class RequestImpl implements Request {
 
 	@Override
 	public String getClient() {
-		// TODO Auto-generated method stub
-		return null;
+		return clientRepository.getClientForDomain(urlObject.getHost());
+	}
+
+	public void setClientRepository(ClientRepository clientRepository) {
+		this.clientRepository = clientRepository;
 	}
 
 }

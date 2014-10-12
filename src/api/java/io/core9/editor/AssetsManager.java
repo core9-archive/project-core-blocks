@@ -2,6 +2,8 @@ package io.core9.editor;
 
 import java.io.FileNotFoundException;
 
+import net.minidev.json.JSONObject;
+
 public interface AssetsManager {
 
 
@@ -19,11 +21,11 @@ public interface AssetsManager {
 
 	void cloneBlocksFromGit(String httpsRepositoryUrl) throws FileNotFoundException;
 
-	void createHostDirectory();
+	void createClientDirectory();
 
-	boolean checkHostDirectory();
+	boolean checkClientDirectory();
 
-	void deleteHostDirectory();
+	void deleteClientDirectory();
 
 	boolean checkSiteDirectory();
 
@@ -35,12 +37,12 @@ public interface AssetsManager {
 
 	boolean checkIfRepositoryDirectoryExists();
 
-	boolean checkPage();
+	boolean checkSite();
 
-	String getPage();
+	JSONObject getSiteConfig();
 
-	void cloneSiteFromGit(String httpsRepositoryUrl);
+	void clonePublicSiteFromGit(String httpsRepositoryUrl);
 
-	void getSiteRepositoryDirectory();
+	String getSiteRepositoryDirectory();
 
 }
