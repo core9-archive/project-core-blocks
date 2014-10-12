@@ -2,6 +2,7 @@ package io.core9.client;
 
 import io.core9.editor.AssetsManager;
 import io.core9.editor.AssetsManagerImpl;
+import io.core9.editor.Block;
 import io.core9.editor.ClientRepository;
 import io.core9.editor.ClientRepositoryImpl;
 import io.core9.editor.PageParser;
@@ -122,7 +123,18 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 					if(testPage.exists()){
 						parser = new PageParserImpl(testPage, blockContainer, blockClassName);
 
-						String htmlTemplate = parser.getOriginalFile();
+						Block block = parser.getBlock(3);
+
+						parser.insertBlock(3, block);
+						parser.insertBlock(3, block);
+
+						parser.insertBlock(3, block);
+						parser.insertBlock(3, block);
+						parser.insertBlock(3, block);
+
+						parser.deleteBlock(7);
+
+						String htmlTemplate = parser.getPage();
 						System.out.println(htmlTemplate);
 
 						Document document = Jsoup.parse(htmlTemplate);
