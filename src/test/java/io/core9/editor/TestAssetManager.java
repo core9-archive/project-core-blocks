@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
-public class TestBlockHandler {
+public class TestAssetManager {
 
 	private static final String pathPrefix = "data/editor";
 	private AssetsManager assetsManager;

@@ -12,15 +12,13 @@ import io.core9.editor.JsonSoyUtils;
 
 public class TestSoyJsonTemplates {
 
-	private String blockClassName;
-	private String blockContainer;
+	private String blockClassName = ".block";
+	private String blockContainer = "#main-section";
 	private PageParser parser;
-
+	private String emptyHtmlTestPage = "/editor/client/site/pages/empty-test-page.html";
 
 	public void setupBlocksFromPage() {
-		blockClassName = ".block";
-		blockContainer = "#main-section";
-		URL url = this.getClass().getResource("/editor/client/pages/full-test-page.html");
+		URL url = this.getClass().getResource(emptyHtmlTestPage );
 		File testPage = new File(url.getFile());
 		assertTrue(testPage.exists());
 		parser = new PageParserImpl(testPage, blockContainer, blockClassName);
@@ -31,6 +29,7 @@ public class TestSoyJsonTemplates {
 
 	@Test
 	public void test() {
+		setupBlocksFromPage();
 		fail("Not yet implemented");
 	}
 
