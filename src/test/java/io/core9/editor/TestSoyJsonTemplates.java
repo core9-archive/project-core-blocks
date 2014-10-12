@@ -1,14 +1,13 @@
 package io.core9.editor;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 
 import org.junit.Test;
-
-import io.core9.editor.JsonSoyUtils;
 
 public class TestSoyJsonTemplates {
 
@@ -17,9 +16,10 @@ public class TestSoyJsonTemplates {
 	private PageParser parser;
 	private String emptyHtmlTestPage = "/editor/client/site/pages/empty-test-page.html";
 
-	private static final String pathPrefix = "data/editor";
+	private static final String pathPrefix = "data/test-editor";
 	private AssetsManager assetsManager;
 	private RequestImpl request;
+	private String absoluteUrl = "http://localhost:8080/easydrain";
 
 	private void setupWorkingDirectory() {
 		assetsManager = new AssetsManagerImpl(pathPrefix);
@@ -35,7 +35,7 @@ public class TestSoyJsonTemplates {
 		assertTrue(testPage.exists());
 		parser = new PageParserImpl(testPage, blockContainer, blockClassName);
 		List<Block> blocks = parser.getBlocks();
-		assertTrue(blocks.size() > 1);
+		assertTrue(blocks.size() == 0);
 	}
 
 
@@ -43,7 +43,11 @@ public class TestSoyJsonTemplates {
 	public void test() {
 		setupWorkingDirectory();
 		setupBlocksFromPage();
-		fail("Not yet implemented");
+
+		request = new RequestImpl();
+		request.setAbsoluteUrl(absoluteUrl);
+		assetsManager.setRequest(request);
+		assetsManager.createHostDirectory();
 	}
 
 }
