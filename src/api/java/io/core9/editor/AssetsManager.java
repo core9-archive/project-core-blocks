@@ -15,7 +15,7 @@ public interface AssetsManager {
 
 	String getUrlId();
 
-	String getHostId();
+	String getClientId();
 
 	void cloneBlocksFromGit(String httpsRepositoryUrl) throws FileNotFoundException;
 

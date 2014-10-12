@@ -79,8 +79,8 @@ public class AssetsManagerImpl implements AssetsManager {
 	}
 
 	@Override
-	public String getHostId() {
-		return getShaId(request.getHost());
+	public String getClientId() {
+		return getShaId(request.getClient());
 	}
 
 	@Override
@@ -117,32 +117,32 @@ public class AssetsManagerImpl implements AssetsManager {
 
 	@Override
 	public void createHostDirectory() {
-		createDirectory(pathPrefix + File.separator + getHostId());
+		createDirectory(pathPrefix + File.separator + getClientId());
 	}
 
 	@Override
 	public boolean checkHostDirectory() {
-		return new File(pathPrefix + File.separator + getHostId()).exists();
+		return new File(pathPrefix + File.separator + getClientId()).exists();
 	}
 
 	@Override
 	public void deleteHostDirectory() {
-		deleteDirectory(new File(pathPrefix + File.separator + getHostId()));
+		deleteDirectory(new File(pathPrefix + File.separator + getClientId()));
 	}
 
 	@Override
 	public boolean checkSiteDirectory() {
-		return new File(pathPrefix + File.separator + getHostId() + File.separator + "site").exists();
+		return new File(pathPrefix + File.separator + getClientId() + File.separator + "site").exists();
 	}
 
 	@Override
 	public void createSiteDirectory() {
-		createDirectory(pathPrefix + File.separator + getHostId() + File.separator + "site");
+		createDirectory(pathPrefix + File.separator + getClientId() + File.separator + "site");
 	}
 
 	@Override
 	public void deleteSiteDirectory() {
-		deleteDirectory(new File(pathPrefix + File.separator + getHostId() + File.separator + "site"));
+		deleteDirectory(new File(pathPrefix + File.separator + getClientId() + File.separator + "site"));
 	}
 
 	@Override
@@ -152,23 +152,23 @@ public class AssetsManagerImpl implements AssetsManager {
 
 			String fileName = httpsRepositoryUrl.substring(httpsRepositoryUrl.lastIndexOf('/') + 1, httpsRepositoryUrl.length());
 			String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
-			repositoryDirectory = "../.." + File.separator + pathPrefix + File.separator + getHostId() + File.separator + blockDir + File.separator + fileNameWithoutExtn;
+			repositoryDirectory = "../.." + File.separator + pathPrefix + File.separator + getClientId() + File.separator + blockDir + File.separator + fileNameWithoutExtn;
 			GitHandler git = new GitHandlerImpl(httpsRepositoryUrl, repositoryDirectory);
 			git.init();
 			// git.pull();
 		} else {
 			// should be directory does not exists
-			throw new FileNotFoundException(pathPrefix + File.separator + getHostId() + File.separator + blockDir);
+			throw new FileNotFoundException(pathPrefix + File.separator + getClientId() + File.separator + blockDir);
 		}
 
 	}
 
 	private void createBlockDirectory() {
-		createDirectory(pathPrefix + File.separator + getHostId() + File.separator + blockDir);
+		createDirectory(pathPrefix + File.separator + getClientId() + File.separator + blockDir);
 	}
 
 	private boolean checkBlockDirectoryIfExists() {
-		return new File(pathPrefix + File.separator + getHostId() + File.separator + blockDir).exists();
+		return new File(pathPrefix + File.separator + getClientId() + File.separator + blockDir).exists();
 	}
 
 	@Override

@@ -38,4 +38,10 @@ public class RequestImpl implements Request {
 		return absoluteUrl;
 	}
 
+	@Override
+	public String getClient() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

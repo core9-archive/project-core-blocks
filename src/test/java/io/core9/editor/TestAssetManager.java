@@ -48,7 +48,7 @@ public class TestAssetManager {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assertTrue(hostId.equals(assetsManager.getHostId()));
+		assertTrue(hostId.equals(assetsManager.getClientId()));
 	}
 
 	@Test

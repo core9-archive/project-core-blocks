@@ -10,4 +10,6 @@ public interface Request {
 
 	String getAbsoluteUrl();
 
+	String getClient();
+
 }
