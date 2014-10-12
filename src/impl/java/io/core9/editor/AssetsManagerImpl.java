@@ -131,22 +131,22 @@ public class AssetsManagerImpl implements AssetsManager {
 	}
 
 	@Override
-	public boolean checkPageDirectory() {
-		return new File(pathPrefix + File.separator + getHostId() + File.separator + getUrlId()).exists();
+	public boolean checkSiteDirectory() {
+		return new File(pathPrefix + File.separator + getHostId() + File.separator + "site").exists();
 	}
 
 	@Override
-	public void createPageDirectory() {
-		createDirectory(pathPrefix + File.separator + getHostId() + File.separator + getUrlId());
+	public void createSiteDirectory() {
+		createDirectory(pathPrefix + File.separator + getHostId() + File.separator + "site");
 	}
 
 	@Override
-	public void deletePageDirectory() {
-		deleteDirectory(new File(pathPrefix + File.separator + getHostId() + File.separator + getUrlId()));
+	public void deleteSiteDirectory() {
+		deleteDirectory(new File(pathPrefix + File.separator + getHostId() + File.separator + "site"));
 	}
 
 	@Override
-	public void downloadBlockFromGit(String httpsRepositoryUrl) throws FileNotFoundException {
+	public void cloneBlocksFromGit(String httpsRepositoryUrl) throws FileNotFoundException {
 		createBlockDirectory();
 		if (checkBlockDirectoryIfExists()) {
 
@@ -181,17 +181,7 @@ public class AssetsManagerImpl implements AssetsManager {
 		return new File("data/git/" + repositoryDirectory).exists();
 	}
 
-	@Override
-	public void downloadPage() {
-		try {
-			page = Jsoup.connect(request.getAbsoluteUrl()).get();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		createPageDirectory();
-		localHtmlPage = pathPrefix + File.separator + getHostId() + File.separator + getUrlId() + File.separator + "page.html";
-		writeToFile(localHtmlPage, page.toString());
-	}
+
 
 	@Override
 	public String getPage() {
@@ -229,15 +219,26 @@ public class AssetsManagerImpl implements AssetsManager {
 	}
 
 	@Override
-	public void downloadPagesFromGit(String httpsRepositoryUrl) {
+	public void cloneSiteFromGit(String httpsRepositoryUrl) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void getPagesRepositoryDirectory() {
+	public void getSiteRepositoryDirectory() {
 		// TODO Auto-generated method stub
 
 	}
 
+/*	@Override
+	public void downloadPage() {
+		try {
+			page = Jsoup.connect(request.getAbsoluteUrl()).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		createSiteDirectory();
+		//localHtmlPage = pathPrefix + File.separator + getHostId() + File.separator + getUrlId() + File.separator + "page.html";
+		//writeToFile(localHtmlPage, page.toString());
+	}*/
 }

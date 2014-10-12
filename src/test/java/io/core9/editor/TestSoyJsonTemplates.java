@@ -20,6 +20,7 @@ public class TestSoyJsonTemplates {
 	private AssetsManager assetsManager;
 	private RequestImpl request;
 	private String absoluteUrl = "http://localhost:8080/easydrain";
+	private String httpsPagesRepositoryUrl = "https://github.com/jessec/site-core9.git";
 
 	private void setupWorkingDirectory() {
 		assetsManager = new AssetsManagerImpl(pathPrefix);
@@ -48,6 +49,8 @@ public class TestSoyJsonTemplates {
 		request.setAbsoluteUrl(absoluteUrl);
 		assetsManager.setRequest(request);
 		assetsManager.createHostDirectory();
+
+		assetsManager.cloneSiteFromGit(httpsPagesRepositoryUrl);
 	}
 
 }

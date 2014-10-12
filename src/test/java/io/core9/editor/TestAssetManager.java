@@ -77,31 +77,23 @@ public class TestAssetManager {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assertFalse(assetsManager.checkPageDirectory());
+		assertFalse(assetsManager.checkSiteDirectory());
 		assetsManager.deleteHostDirectory();
-		assetsManager.createPageDirectory();
-		assertTrue(assetsManager.checkPageDirectory());
+		assetsManager.createSiteDirectory();
+		assertTrue(assetsManager.checkSiteDirectory());
 	}
 
-	@Test
-	public void testDownloadPageInPageDirectory() {
-		setupWorkingDirectory();
-		setUpRequest();
-		assetsManager.setRequest(request);
-		assetsManager.downloadPage();
-		assertTrue(assetsManager.checkPage());
-		System.out.println(assetsManager.getPage());
-	}
+
 
 	@Test
 	public void testDeletePageDirectory() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assetsManager.createPageDirectory();
-		assertTrue(assetsManager.checkPageDirectory());
-		assetsManager.deletePageDirectory();
-		assertFalse(assetsManager.checkPageDirectory());
+		assetsManager.createSiteDirectory();
+		assertTrue(assetsManager.checkSiteDirectory());
+		assetsManager.deleteSiteDirectory();
+		assertFalse(assetsManager.checkSiteDirectory());
 	}
 
 	@Test
@@ -109,9 +101,19 @@ public class TestAssetManager {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assetsManager.downloadBlockFromGit("https://github.com/jessec/block-video.git");
+		assetsManager.cloneBlocksFromGit("https://github.com/jessec/block-video.git");
 		assetsManager.getRepositoryDirectory();
 		assertTrue(assetsManager.checkIfRepositoryDirectoryExists());
+	}
+
+	@Test
+	public void testPullPagesFromGit() {
+		setupWorkingDirectory();
+		setUpRequest();
+		assetsManager.setRequest(request);
+		assetsManager.cloneSiteFromGit("https://github.com/jessec/site-core9.git");
+		assertTrue(assetsManager.checkPage());
+		System.out.println(assetsManager.getPage());
 	}
 
 	@Test
@@ -119,8 +121,8 @@ public class TestAssetManager {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
-		assetsManager.downloadPagesFromGit("https://github.com/jessec/site-core9.git");
-		assetsManager.getPagesRepositoryDirectory();
+		assetsManager.cloneSiteFromGit("https://github.com/jessec/site-core9.git");
+		assetsManager.getSiteRepositoryDirectory();
 		// assertTrue(blockHandler.checkIfRepositoryDirectoryExists());
 	}
 

@@ -17,7 +17,7 @@ public interface AssetsManager {
 
 	String getHostId();
 
-	void downloadBlockFromGit(String httpsRepositoryUrl) throws FileNotFoundException;
+	void cloneBlocksFromGit(String httpsRepositoryUrl) throws FileNotFoundException;
 
 	void createHostDirectory();
 
@@ -25,24 +25,22 @@ public interface AssetsManager {
 
 	void deleteHostDirectory();
 
-	boolean checkPageDirectory();
+	boolean checkSiteDirectory();
 
-	void createPageDirectory();
+	void createSiteDirectory();
 
-	void deletePageDirectory();
+	void deleteSiteDirectory();
 
 	String getRepositoryDirectory();
 
 	boolean checkIfRepositoryDirectoryExists();
 
-	void downloadPage();
-
 	boolean checkPage();
 
 	String getPage();
 
-	void downloadPagesFromGit(String httpsRepositoryUrl);
+	void cloneSiteFromGit(String httpsRepositoryUrl);
 
-	void getPagesRepositoryDirectory();
+	void getSiteRepositoryDirectory();
 
 }
