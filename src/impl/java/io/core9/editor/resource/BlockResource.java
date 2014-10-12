@@ -30,6 +30,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import net.minidev.json.JSONObject;
+import net.minidev.json.JSONValue;
+
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -70,6 +73,9 @@ public class BlockResource {
 	public Response addBlock(
 			@ApiParam(value = "Block object that needs to be added to the store", required = true) Block block) {
 		blockData.addBlock(block);
+
+		JSONObject data = (JSONObject) JSONValue.parse(block.getData());
+		System.out.println(data);
 		return Response.ok().entity("SUCCESS").build();
 	}
 
