@@ -4,11 +4,12 @@ import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 public class TestAssetManager {
 
-	private static final String pathPrefix = "data/editor";
+	private static final String pathPrefix = "data/test-editor";
 	private AssetsManager assetsManager;
 	private RequestImpl request;
 	private String hostId = "334389048b872a533002b34d73f8c29fd09efc50";
@@ -21,9 +22,17 @@ public class TestAssetManager {
 		assetsManager.createWorkingDirectory();
 		assertTrue(assetsManager.checkWorkingDirectory());
 	}
-	private void setUpRequest(){
+
+	private void setUpRequest() {
 		request = new RequestImpl();
 		request.setAbsoluteUrl("http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html");
+	}
+
+	@AfterClass
+	public static void cleanup() {
+		AssetsManager assetsManager = new AssetsManagerImpl(pathPrefix);
+		assetsManager.deleteWorkingDirectory();
+		assertFalse(assetsManager.checkWorkingDirectory());
 	}
 
 	@Test
@@ -43,7 +52,7 @@ public class TestAssetManager {
 	}
 
 	@Test
-	public void testCreateHostDirectory(){
+	public void testCreateHostDirectory() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
@@ -53,7 +62,7 @@ public class TestAssetManager {
 	}
 
 	@Test
-	public void testDeleteHostDirectory(){
+	public void testDeleteHostDirectory() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
@@ -64,7 +73,7 @@ public class TestAssetManager {
 	}
 
 	@Test
-	public void testCreatePageDirectory(){
+	public void testCreatePageDirectory() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
@@ -75,7 +84,7 @@ public class TestAssetManager {
 	}
 
 	@Test
-	public void testDownloadPageInPageDirectory(){
+	public void testDownloadPageInPageDirectory() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
@@ -84,9 +93,8 @@ public class TestAssetManager {
 		System.out.println(assetsManager.getPage());
 	}
 
-
 	@Test
-	public void testDeletePageDirectory(){
+	public void testDeletePageDirectory() {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
@@ -96,9 +104,8 @@ public class TestAssetManager {
 		assertFalse(assetsManager.checkPageDirectory());
 	}
 
-
 	@Test
-	public void testDownloadBlockFromGit() throws FileNotFoundException, InterruptedException{
+	public void testDownloadBlockFromGit() throws FileNotFoundException, InterruptedException {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
@@ -108,15 +115,14 @@ public class TestAssetManager {
 	}
 
 	@Test
-	public void testDownloadPagesFromGit() throws FileNotFoundException, InterruptedException{
+	public void testDownloadPagesFromGit() throws FileNotFoundException, InterruptedException {
 		setupWorkingDirectory();
 		setUpRequest();
 		assetsManager.setRequest(request);
 		assetsManager.downloadPagesFromGit("https://github.com/jessec/site-core9.git");
 		assetsManager.getPagesRepositoryDirectory();
-		//assertTrue(blockHandler.checkIfRepositoryDirectoryExists());
+		// assertTrue(blockHandler.checkIfRepositoryDirectoryExists());
 	}
-
 
 	@Test
 	public void testCreateWorkingDirectory() {

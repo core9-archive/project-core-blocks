@@ -17,6 +17,18 @@ public class TestSoyJsonTemplates {
 	private PageParser parser;
 	private String emptyHtmlTestPage = "/editor/client/site/pages/empty-test-page.html";
 
+	private static final String pathPrefix = "data/editor";
+	private AssetsManager assetsManager;
+	private RequestImpl request;
+
+	private void setupWorkingDirectory() {
+		assetsManager = new AssetsManagerImpl(pathPrefix);
+		assetsManager.deleteWorkingDirectory();
+		assertFalse(assetsManager.checkWorkingDirectory());
+		assetsManager.createWorkingDirectory();
+		assertTrue(assetsManager.checkWorkingDirectory());
+	}
+
 	public void setupBlocksFromPage() {
 		URL url = this.getClass().getResource(emptyHtmlTestPage );
 		File testPage = new File(url.getFile());
@@ -29,6 +41,7 @@ public class TestSoyJsonTemplates {
 
 	@Test
 	public void test() {
+		setupWorkingDirectory();
 		setupBlocksFromPage();
 		fail("Not yet implemented");
 	}
