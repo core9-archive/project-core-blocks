@@ -203,7 +203,7 @@ public class AssetsManagerImpl implements AssetsManager {
 		return new File(getSiteConfigFile()).exists();
 	}
 
-	@SuppressWarnings("unused")
+
 	private void writeToFile(String fileName, String content) {
 		Writer writer = null;
 		try {
@@ -246,7 +246,7 @@ public class AssetsManagerImpl implements AssetsManager {
 		return siteRepositoryDirectory;
 	}
 
-	private String getPageTemplatePath(){
+	private String getPagePath(){
 		String path = request.getPath();
 		String lastChar = path.substring(path.length() - 1);
 		String fileSeperator = "";
@@ -254,18 +254,25 @@ public class AssetsManagerImpl implements AssetsManager {
 			fileSeperator = "/";
 		}
 
-		return getSiteRepositoryDirectory() + File.separator + "pages" + File.separator + request.getHost() + path + fileSeperator + "template.html";
+		return getSiteRepositoryDirectory() + File.separator + "pages" + File.separator + request.getHost() + path + fileSeperator ;
 	}
 
 	@Override
 	public boolean checkIfPageTemplateExists() {
-		String path = "data/git/" +getPageTemplatePath();
+		String path = "data/git/" +getPagePath() + "template.html";
 		return new File(path).exists();
 	}
 
 	@Override
 	public String getPageTemplate() {
-		return "data/git/" +getPageTemplatePath();
+		return "data/git/" +getPagePath() + "template.html";
+	}
+
+	@Override
+	public void writePageCache(String content) {
+		String cacheFile = "data/git/" +getPagePath() + "cache.html";
+
+		writeToFile(cacheFile, content);
 	}
 
 

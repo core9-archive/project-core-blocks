@@ -51,6 +51,8 @@ public interface AssetsManager {
 
 	boolean checkIfPageTemplateExists();
 
+	void writePageCache(String string);
+
 
 
 }

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
 
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.data.SoyData;
@@ -113,7 +114,9 @@ public class BlockToolImpl implements BlockTool {
 
 				Document document = Jsoup.parse(htmlTemplate);
 
+				// get
 				// save the compiled page as cache.html
+				assetsManager.writePageCache(document.toString());
 			}
 		}
 	}
@@ -142,9 +145,17 @@ public class BlockToolImpl implements BlockTool {
 
 	    SoyMapData soyData = (SoyMapData) JsonSoyUtils.JsonToSoy(data.toJSONString());
 
-	    System.out.println(tofu.newRenderer(soyNameSpace).setData(soyData).render());
-	    //.setData(new SoyMapData("name", "Ana")).render());
-		return null;
+	    String blockHtml = tofu.newRenderer(soyNameSpace).setData(soyData).render();
+
+
+
+	    System.out.println(blockHtml);
+
+	    Document blockDoc = Jsoup.parse(blockHtml);
+
+	    Element tag = Jsoup.parse(blockHtml, "", Parser.xmlParser());
+
+		return tag;
 	}
 
 	@Override
