@@ -139,6 +139,7 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 				return result;
 			}
 
+			@SuppressWarnings("unused")
 			private Map<String, Object> getBackupUrl(Map<String, Object> result, String url) {
 				String urlFileName = url.replace("/", "_");
 
