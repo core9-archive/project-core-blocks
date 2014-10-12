@@ -34,6 +34,7 @@ public class Block {
 	private List<String> photoUrls = new ArrayList<String>();
 	private List<Tag> tags = new ArrayList<Tag>();
 	private String status;
+	private String data;
 
 	@XmlElement(name = "id")
 	@ApiModelProperty(value = "id of block", required = true)
@@ -61,6 +62,15 @@ public class Block {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@XmlElement(name = "data")
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
 	}
 
 	@XmlElementWrapper(name = "photoUrls")

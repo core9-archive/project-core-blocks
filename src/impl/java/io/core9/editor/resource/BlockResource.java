@@ -80,7 +80,9 @@ public class BlockResource {
 			@ApiResponse(code = 405, message = "Validation exception") })
 	public Response updateBlock(
 			@ApiParam(value = "Block object that needs to be added to the store", required = true) Block block) {
+
 		blockData.addBlock(block);
+
 		return Response.ok().entity("SUCCESS").build();
 	}
 

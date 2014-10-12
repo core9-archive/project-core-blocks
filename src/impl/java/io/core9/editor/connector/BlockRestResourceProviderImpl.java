@@ -33,7 +33,7 @@ public class BlockRestResourceProviderImpl implements BlockRestResourceProvider 
 	    config.setBasePath("http://localhost:8080/api");
 
 		restResourceConfig.setSwaggerConfig(config);
-		restResourceConfig.setModelPackage("io.core9.model");
+		restResourceConfig.setModelPackage("io.core9.editor.model");
 
 
 		resourceMap.putAll(RestUtils.addRestResource(restResourceConfig, new BlockResource()));

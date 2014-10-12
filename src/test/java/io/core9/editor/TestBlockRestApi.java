@@ -43,11 +43,11 @@ public class TestBlockRestApi {
 
 		request.setBasePath("/api");
 		request.setMethod(Method.GET);
-		request.setPath("/api/pet-docs");
+		request.setPath("/api/block-docs");
 
 		Object response = restRouter.getResponse(request);
 
-		assertTrue(((HashMap<String, Object>) response).get("resourcePath").equals("/pet"));
+		assertTrue(((HashMap<String, Object>) response).get("resourcePath").equals("/block"));
 	}
 
 	public void restRouterGetPetById() {
@@ -112,7 +112,7 @@ public class TestBlockRestApi {
 
 		System.out.println(response);
 	}
-	
+
 	public void restRouterPostPet() {
 
 		RestRequest request = new RestRequestImpl();
@@ -138,11 +138,11 @@ public class TestBlockRestApi {
 		routerTest.setUp();
 		long start = System.currentTimeMillis();
 		routerTest.restRouterGetApiForPet();
-		routerTest.restRouterGetPetById();
-		routerTest.restRouterGetfindByTags();
-		routerTest.restRouterGetOwnerOfPet();
-		routerTest.restRouterPostPet();
-		routerTest.restRouterPutPet();
+		//routerTest.restRouterGetPetById();
+		//routerTest.restRouterGetfindByTags();
+		//routerTest.restRouterGetOwnerOfPet();
+		//routerTest.restRouterPostPet();
+		//routerTest.restRouterPutPet();
 
 		long elapsed = System.currentTimeMillis() - start;
 		System.out.println("elapsed time = " + elapsed + "ms");
