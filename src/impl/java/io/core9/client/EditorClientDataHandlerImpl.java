@@ -75,7 +75,6 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 					assetsManager.createWorkingDirectory();
 				}
 
-
 				clientRepository = new ClientRepositoryImpl();
 				clientRepository.addDomain("www.easydrain.nl", "easydrain");
 				clientRepository.addDomain("localhost", "easydrain");
@@ -84,10 +83,6 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 				request.setAbsoluteUrl("http://localhost:8080/nl/easydrain");
 
 				assetsManager.setRequest(request);
-
-
-
-
 
 				String url = "http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html";
 
@@ -106,9 +101,9 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 						e.printStackTrace();
 					}
 
-				} else {
-					result = getBackupUrl(result, url);
 				}
+
+				result = getBackupUrl(result, url);
 
 				return result;
 			}
