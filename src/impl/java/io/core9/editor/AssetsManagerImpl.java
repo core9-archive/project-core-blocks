@@ -246,4 +246,18 @@ public class AssetsManagerImpl implements AssetsManager {
 		return siteRepositoryDirectory;
 	}
 
+	private String getPageTemplatePath(){
+		return getSiteRepositoryDirectory() + File.separator + "pages" + File.separator + request.getHost() + request.getPath() + File.separator + "template.html";
+	}
+
+	@Override
+	public boolean checkIfPageTemplateExists() {
+		return new File(getPageTemplatePath()).exists();
+	}
+
+	@Override
+	public String getPageTemplate() {
+		return getPageTemplatePath();
+	}
+
 }

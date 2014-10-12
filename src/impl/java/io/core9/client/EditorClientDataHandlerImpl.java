@@ -1,6 +1,5 @@
 package io.core9.client;
 
-import static org.junit.Assert.assertFalse;
 import io.core9.editor.AssetsManager;
 import io.core9.editor.AssetsManagerImpl;
 import io.core9.editor.ClientRepository;
@@ -28,7 +27,7 @@ import org.jsoup.nodes.Document;
 @PluginImplementation
 public class EditorClientDataHandlerImpl implements EditorClientDataHandler<EditorClientDataHandlerConfig> {
 
-	private static final String pathPrefix = "data/editor/";
+	private static final String pathPrefix = "data/editor";
 
 	@InjectPlugin
 	private EditorClientPlugin editorClientPlugin;
@@ -39,11 +38,9 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 	private String blockClassName = ".block";
 	private String blockContainer = "#main-section";
 	private PageParser parser;
-	private String emptyHtmlTestPage = "/editor/client/site/pages/empty-test-page.html";
 
 	private AssetsManager assetsManager;
 	private RequestImpl request;
-	private String absoluteUrl = "http://localhost:8080/easydrain";
 	private String httpsSiteRepositoryUrl = "https://github.com/jessec/site-core9.git";
 	private String httpsBlockRepositoryUrl = "https://github.com/jessec/block-video.git";
 	private ClientRepository clientRepository;
@@ -80,7 +77,12 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 				clientRepository.addDomain("localhost", "easydrain");
 				request = new RequestImpl();
 				request.setClientRepository(clientRepository);
-				request.setAbsoluteUrl("http://localhost:8080/nl/easydrain");
+
+				String absoluteUrl = "http://" + req.getHostname() + req.getPath();
+
+				request.setAbsoluteUrl(absoluteUrl);
+
+
 
 				assetsManager.setRequest(request);
 
@@ -100,6 +102,10 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
+
+				}else{
+
+					assetsManager.getPageTemplate();
 
 				}
 

@@ -47,4 +47,8 @@ public interface AssetsManager {
 
 	String getSiteConfigFile();
 
+	String getPageTemplate();
+
+	boolean checkIfPageTemplateExists();
+
 }
