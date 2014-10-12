@@ -45,4 +45,6 @@ public interface AssetsManager {
 
 	String getSiteRepositoryDirectory();
 
+	String getSiteConfigFile();
+
 }

@@ -188,7 +188,7 @@ public class AssetsManagerImpl implements AssetsManager {
 
 	@Override
 	public JSONObject getSiteConfig() {
-		String config = readFile(siteConfigFile, StandardCharsets.UTF_8);
+		String config = readFile(getSiteConfigFile(), StandardCharsets.UTF_8);
 		JSONObject obj = new JSONObject();
 		try {
 			obj = (JSONObject) JSONValue.parseStrict(config);
@@ -200,7 +200,7 @@ public class AssetsManagerImpl implements AssetsManager {
 
 	@Override
 	public boolean checkSite() {
-		return new File(siteConfigFile).exists();
+		return new File(getSiteConfigFile()).exists();
 	}
 
 	@SuppressWarnings("unused")
@@ -231,13 +231,18 @@ public class AssetsManagerImpl implements AssetsManager {
 
 	@Override
 	public void clonePublicSiteFromGit(String httpsRepositoryUrl) {
-		siteRepositoryDirectory = "../.." + File.separator + pathPrefix + File.separator + getClientId() + File.separator + siteDir;
+		clonePublicGitRepository(httpsRepositoryUrl, getSiteRepositoryDirectory());
+	}
+
+	@Override
+	public String getSiteConfigFile() {
 		siteConfigFile = "data/git" + File.separator + siteRepositoryDirectory + File.separator + "site.json";
-		clonePublicGitRepository(httpsRepositoryUrl, siteRepositoryDirectory);
+		return siteConfigFile;
 	}
 
 	@Override
 	public String getSiteRepositoryDirectory() {
+		siteRepositoryDirectory = "../.." + File.separator + pathPrefix + File.separator + getClientId() + File.separator + siteDir;
 		return siteRepositoryDirectory;
 	}
 
