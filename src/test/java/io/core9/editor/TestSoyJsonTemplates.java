@@ -7,6 +7,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+import net.minidev.json.JSONObject;
+
 import org.junit.Test;
 
 public class TestSoyJsonTemplates {
@@ -21,6 +23,7 @@ public class TestSoyJsonTemplates {
 	private RequestImpl request;
 	private String absoluteUrl = "http://localhost:8080/easydrain";
 	private String httpsPagesRepositoryUrl = "https://github.com/jessec/site-core9.git";
+	private ClientRepository clientRepository;
 
 	private void setupWorkingDirectory() {
 		assetsManager = new AssetsManagerImpl(pathPrefix);
@@ -39,18 +42,29 @@ public class TestSoyJsonTemplates {
 		assertTrue(blocks.size() == 0);
 	}
 
+	private void setUpRequest() {
+		clientRepository = new ClientRepositoryImpl();
+		clientRepository.addDomain("www.easydrain.nl", "easydrain");
+		clientRepository.addDomain("localhost", "easydrain");
+		request = new RequestImpl();
+		request.setClientRepository(clientRepository);
+		request.setAbsoluteUrl("http://localhost:8080/easydrain");
+	}
+
 
 	@Test
 	public void test() {
 		setupWorkingDirectory();
 		setupBlocksFromPage();
+		setUpRequest();
 
-		request = new RequestImpl();
-		request.setAbsoluteUrl(absoluteUrl);
 		assetsManager.setRequest(request);
 		assetsManager.createClientDirectory();
 
 		assetsManager.clonePublicSiteFromGit(httpsPagesRepositoryUrl);
+		JSONObject config = assetsManager.getSiteConfig();
+		System.out.println(config);
+
 	}
 
 }
