@@ -63,7 +63,7 @@ public class TestSoyJsonTemplates {
 
 
 	@Test
-	public void testCloneSiteFromGit() {
+	public void testCloneSiteAndBlocksFromGit() {
 		setupWorkingDirectory();
 		setupBlocksFromPage();
 		setUpRequest();
@@ -75,17 +75,6 @@ public class TestSoyJsonTemplates {
 		JSONObject config = assetsManager.getSiteConfig();
 		System.out.println(config);
 
-	}
-
-	@Test
-	public void testCloneBlocksFromGit() {
-		setupWorkingDirectory();
-		setupBlocksFromPage();
-		setUpRequest();
-
-		assetsManager.setRequest(request);
-		assetsManager.createClientDirectory();
-
 		try {
 			assetsManager.cloneBlocksFromGit(httpsBlockRepositoryUrl);
 		} catch (FileNotFoundException e) {
@@ -93,5 +82,7 @@ public class TestSoyJsonTemplates {
 		}
 
 	}
+
+
 
 }
