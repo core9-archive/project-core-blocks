@@ -247,17 +247,25 @@ public class AssetsManagerImpl implements AssetsManager {
 	}
 
 	private String getPageTemplatePath(){
-		return getSiteRepositoryDirectory() + File.separator + "pages" + File.separator + request.getHost() + request.getPath() + File.separator + "template.html";
+		String path = request.getPath();
+		String lastChar = path.substring(path.length() - 1);
+		String fileSeperator = "";
+		if(!lastChar.equals("/")){
+			fileSeperator = "/";
+		}
+
+		return getSiteRepositoryDirectory() + File.separator + "pages" + File.separator + request.getHost() + path + fileSeperator + "template.html";
 	}
 
 	@Override
 	public boolean checkIfPageTemplateExists() {
-		return new File(getPageTemplatePath()).exists();
+		String path = "data/git/" +getPageTemplatePath();
+		return new File(path).exists();
 	}
 
 	@Override
 	public String getPageTemplate() {
-		return getPageTemplatePath();
+		return "data/git/" +getPageTemplatePath();
 	}
 
 }

@@ -5,6 +5,7 @@ import io.core9.editor.AssetsManagerImpl;
 import io.core9.editor.ClientRepository;
 import io.core9.editor.ClientRepositoryImpl;
 import io.core9.editor.PageParser;
+import io.core9.editor.PageParserImpl;
 import io.core9.editor.RequestImpl;
 import io.core9.plugin.server.request.Request;
 import io.core9.plugin.template.closure.ClosureTemplateEngine;
@@ -37,6 +38,7 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 
 	private String blockClassName = ".block";
 	private String blockContainer = "#main-section";
+	@SuppressWarnings("unused")
 	private PageParser parser;
 
 	private AssetsManager assetsManager;
@@ -68,6 +70,7 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 				Map<String, Object> result = new HashMap<String, Object>();
 
 				assetsManager = new AssetsManagerImpl(pathPrefix);
+				//assetsManager.deleteWorkingDirectory();
 				if (!assetsManager.checkWorkingDirectory()) {
 					assetsManager.createWorkingDirectory();
 				}
@@ -105,11 +108,33 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 
 				}else{
 
-					assetsManager.getPageTemplate();
 
 				}
 
-				result = getBackupUrl(result, url);
+				System.out.println(assetsManager.getPageTemplate());
+
+				if(assetsManager.checkIfPageTemplateExists()){
+					String pageTemplate = assetsManager.getPageTemplate();
+					System.out.println("");
+
+
+					File testPage = new File(pageTemplate);
+					if(testPage.exists()){
+						parser = new PageParserImpl(testPage, blockContainer, blockClassName);
+
+						String htmlTemplate = parser.getOriginalFile();
+						System.out.println(htmlTemplate);
+
+						Document document = Jsoup.parse(htmlTemplate);
+						result.put("head", document.head().toString());
+						result.put("body", document.body().toString());
+					}
+
+
+				}
+
+
+				//result = getBackupUrl(result, url);
 
 				return result;
 			}
