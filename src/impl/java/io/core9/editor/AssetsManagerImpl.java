@@ -270,8 +270,23 @@ public class AssetsManagerImpl implements AssetsManager {
 
 	@Override
 	public void writePageCache(String content) {
+		String templateFile = "data/git/" +getPagePath() + "template.html";
+		String orgTemplateFile = "data/git/" +getPagePath() + "org.template.html";
 		String cacheFile = "data/git/" +getPagePath() + "cache.html";
 
+		File oldfile =new File(templateFile);
+		File newfile =new File(orgTemplateFile);
+
+		if(!newfile.exists()){
+			if(oldfile.renameTo(newfile)){
+				System.out.println("Rename succesful");
+			}else{
+				System.out.println("Rename failed");
+			}
+		}
+
+
+		writeToFile(templateFile, content);
 		writeToFile(cacheFile, content);
 	}
 
