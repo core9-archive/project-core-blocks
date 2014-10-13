@@ -1,18 +1,5 @@
 package io.core9.editor.resource;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.parser.Parser;
-
-import com.google.template.soy.SoyFileSet;
-import com.google.template.soy.data.SoyData;
-import com.google.template.soy.data.SoyMapData;
-import com.google.template.soy.tofu.SoyTofu;
-
 import io.core9.editor.AssetsManager;
 import io.core9.editor.AssetsManagerImpl;
 import io.core9.editor.Block;
@@ -23,7 +10,20 @@ import io.core9.editor.JsonSoyUtils;
 import io.core9.editor.PageParser;
 import io.core9.editor.PageParserImpl;
 import io.core9.editor.RequestImpl;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import net.minidev.json.JSONObject;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
+
+import com.google.template.soy.SoyFileSet;
+import com.google.template.soy.data.SoyMapData;
+import com.google.template.soy.tofu.SoyTofu;
 
 public class BlockToolImpl implements BlockTool {
 
@@ -151,7 +151,6 @@ public class BlockToolImpl implements BlockTool {
 
 	    System.out.println(blockHtml);
 
-	    Document blockDoc = Jsoup.parse(blockHtml);
 
 	    Element tag = Jsoup.parse(blockHtml, "", Parser.xmlParser());
 

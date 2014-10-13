@@ -2,11 +2,8 @@ package io.core9.client;
 
 import io.core9.editor.AssetsManager;
 import io.core9.editor.AssetsManagerImpl;
-import io.core9.editor.Block;
 import io.core9.editor.ClientRepository;
 import io.core9.editor.ClientRepositoryImpl;
-import io.core9.editor.PageParser;
-import io.core9.editor.PageParserImpl;
 import io.core9.editor.RequestImpl;
 import io.core9.plugin.server.request.Request;
 import io.core9.plugin.template.closure.ClosureTemplateEngine;
@@ -14,12 +11,10 @@ import io.core9.plugin.widgets.datahandler.DataHandler;
 import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minidev.json.JSONObject;
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
 
@@ -37,15 +32,9 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 	@InjectPlugin
 	private ClosureTemplateEngine engine;
 
-	private String blockClassName = ".block";
-	private String blockContainer = "#main-section";
-
-	private PageParser parser;
 
 	private AssetsManager assetsManager;
 	private RequestImpl request;
-	private String httpsSiteRepositoryUrl = "https://github.com/jessec/site-core9.git";
-	private String httpsBlockRepositoryUrl = "https://github.com/jessec/block-video.git";
 	private ClientRepository clientRepository;
 
 	@Override

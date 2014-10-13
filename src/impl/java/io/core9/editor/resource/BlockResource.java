@@ -79,7 +79,7 @@ public class BlockResource {
 
 		BlockTool blockTool = new BlockToolImpl();
 		blockTool.setData(data);
-		String status = blockTool.getResponse();
+		//String status = blockTool.getResponse();
 
 		return Response.ok().entity("SUCCESS").build();
 	}
