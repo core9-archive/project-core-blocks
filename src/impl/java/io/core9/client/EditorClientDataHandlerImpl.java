@@ -12,6 +12,10 @@ import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,14 +79,29 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 				assetsManager.setRequest(request);
 
 
+				Document document;
+				try {
+					 document = Jsoup.parse(assetsManager.getCachedPage());
+				} catch (Exception e) {
+					document = Jsoup.parse(readFile(assetsManager.getPageTemplate(), StandardCharsets.UTF_8));
+				}
 
-				Document document = Jsoup.parse(assetsManager.getCachedPage());
 				result.put("head", document.head().toString());
 				result.put("body", document.body().toString());
 
 				//result = getBackupUrl(result, url);
 
 				return result;
+			}
+
+			private String readFile(String path, Charset encoding) {
+				byte[] encoded = null;
+				try {
+					encoded = Files.readAllBytes(Paths.get(path));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return new String(encoded, encoding);
 			}
 
 			@SuppressWarnings("unused")

@@ -77,7 +77,7 @@ public class BlockResource {
 		JSONObject data = (JSONObject) JSONValue.parse(block.getData());
 		System.out.println(data);
 
-		BlockTool blockTool = new BlockToolImpl();
+		BlockTool blockTool = new BlockUpdateToolImpl();
 		blockTool.setData(data);
 		//String status = blockTool.getResponse();
 
@@ -107,6 +107,12 @@ public class BlockResource {
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Invalid status value") })
 	public Response findBlocksByStatus(
 			@ApiParam(value = "Status values that need to be considered for filter", required = true, defaultValue = "available", allowableValues = "available,pending,sold", allowMultiple = true) @QueryParam("status") String status) {
+
+		BlockTool blockTool = new BlockCommandImpl();
+		JSONObject data = new JSONObject();
+		data.put("action", status);
+		blockTool.setData(data);
+
 		return Response.ok(blockData.findBlockByStatus(status)).build();
 	}
 

@@ -25,7 +25,7 @@ import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.data.SoyMapData;
 import com.google.template.soy.tofu.SoyTofu;
 
-public class BlockToolImpl implements BlockTool {
+public class BlockUpdateToolImpl implements BlockTool {
 
 	private String blockClassName = ".block";
 	private String blockContainer = "#main-section";
