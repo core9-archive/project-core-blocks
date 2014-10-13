@@ -39,7 +39,7 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 
 	private String blockClassName = ".block";
 	private String blockContainer = "#main-section";
-	@SuppressWarnings("unused")
+
 	private PageParser parser;
 
 	private AssetsManager assetsManager;
@@ -81,70 +81,15 @@ public class EditorClientDataHandlerImpl implements EditorClientDataHandler<Edit
 				clientRepository.addDomain("localhost", "easydrain");
 				request = new RequestImpl();
 				request.setClientRepository(clientRepository);
-
 				String absoluteUrl = "http://" + req.getHostname() + req.getPath();
-
 				request.setAbsoluteUrl(absoluteUrl);
-
-
-
 				assetsManager.setRequest(request);
 
-				String url = "http://localhost/module-page-editor/src/impl/resources/editor/clients/easydrain/pages/frontpage.html";
-
-				File siteConfig = new File(assetsManager.getSiteConfigFile());
-				if (!siteConfig.exists()) {
-
-					assetsManager.createClientDirectory();
-
-					assetsManager.clonePublicSiteFromGit(httpsSiteRepositoryUrl);
-					JSONObject config = assetsManager.getSiteConfig();
-					System.out.println(config);
-
-					try {
-						assetsManager.cloneBlocksFromGit(httpsBlockRepositoryUrl);
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
-					}
-
-				}else{
 
 
-				}
-
-				System.out.println(assetsManager.getPageTemplate());
-
-				if(assetsManager.checkIfPageTemplateExists()){
-					String pageTemplate = assetsManager.getPageTemplate();
-					System.out.println("");
-
-
-					File testPage = new File(pageTemplate);
-					if(testPage.exists()){
-						parser = new PageParserImpl(testPage, blockContainer, blockClassName);
-
-						Block block = parser.getBlock(3);
-
-						parser.insertBlock(3, block);
-						parser.insertBlock(3, block);
-
-						parser.insertBlock(3, block);
-						parser.insertBlock(3, block);
-						parser.insertBlock(3, block);
-
-						parser.deleteBlock(7);
-
-						String htmlTemplate = parser.getPage();
-						System.out.println(htmlTemplate);
-
-						Document document = Jsoup.parse(htmlTemplate);
-						result.put("head", document.head().toString());
-						result.put("body", document.body().toString());
-					}
-
-
-				}
-
+				Document document = Jsoup.parse(assetsManager.getCachedPage());
+				result.put("head", document.head().toString());
+				result.put("body", document.body().toString());
 
 				//result = getBackupUrl(result, url);
 

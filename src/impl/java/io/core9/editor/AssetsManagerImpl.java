@@ -275,6 +275,11 @@ public class AssetsManagerImpl implements AssetsManager {
 		writeToFile(cacheFile, content);
 	}
 
+	@Override
+	public String getCachedPage(){
+		String cacheFile = "data/git/" +getPagePath() + "cache.html";
+		return  readFile(cacheFile, StandardCharsets.UTF_8);
+	}
 
 
 }

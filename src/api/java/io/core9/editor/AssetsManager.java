@@ -53,6 +53,8 @@ public interface AssetsManager {
 
 	void writePageCache(String string);
 
+	String getCachedPage();
+
 
 
 }
