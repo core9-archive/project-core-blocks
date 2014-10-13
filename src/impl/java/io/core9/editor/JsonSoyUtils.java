@@ -116,13 +116,14 @@ public class JsonSoyUtils {
           } else if (node.isString()) {
             map.put(key, node.getAsString());
           } else if (node.isNumber()) {
+        	//FIXME quick hack need investigation
             Number number = node.getAsNumber();
             if (number instanceof Integer) {
-              map.put(key, number.intValue());
+              map.put(key, "\"" + number.intValue() + "\"");
             } else if (number instanceof Double) {
-              map.put(key, number.doubleValue());
+              map.put(key, "\"" + number.doubleValue() + "\"");
             } else {
-              map.put(key, number);
+              map.put(key, "\"" + number + "\"");
             }
           }
         } else {
