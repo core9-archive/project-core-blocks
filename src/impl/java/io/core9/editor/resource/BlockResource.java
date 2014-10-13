@@ -48,7 +48,7 @@ public class BlockResource {
 	static BlockData blockData = new BlockData();
 	static JavaRestResourceUtil ru = new JavaRestResourceUtil();
 
-	@GET
+/*	@GET
 	@Path("/{blockId : [0-9]}")
 	@ApiOperation(
 		value = "Find block by ID",
@@ -65,7 +65,7 @@ public class BlockResource {
 		} else {
 			throw new NotFoundException(404, "Block not found");
 		}
-	}
+	}*/
 
 	@POST
 	@ApiOperation(value = "Add a new block to the store")
