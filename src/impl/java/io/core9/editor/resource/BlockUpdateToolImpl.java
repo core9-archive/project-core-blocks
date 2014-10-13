@@ -99,23 +99,24 @@ public class BlockUpdateToolImpl implements BlockTool {
 
 				Block block = new BlockImpl();
 
-				String blockTemplate = meta.getAsString("template");
-				Element elem = parseSoyTemplateToElement(assetsManager.getClientId(), blockTemplate , editorData);
+				if(meta.getAsString("state").equals("delete")){
+					parser.deleteBlock(Integer.parseInt((String) meta.get("block")));
+				}
+
+				if(meta.getAsString("state").equals("edit")){
+					String blockTemplate = meta.getAsString("template");
+					Element elem = parseSoyTemplateToElement(assetsManager.getClientId(), blockTemplate , editorData);
+					block.addElement(elem);
+					parser.replaceBlock(Integer.parseInt((String) meta.get("block")), block );
+				}
 
 
 
-				block.addElement(elem);
 
-
-				parser.replaceBlock(Integer.parseInt((String) meta.get("block")), block );
 
 				String htmlTemplate = parser.getPage();
 				System.out.println(htmlTemplate);
-
 				Document document = Jsoup.parse(htmlTemplate);
-
-				// get
-				// save the compiled page as cache.html
 				assetsManager.writePageCache(document.toString());
 			}
 		}
