@@ -17,7 +17,6 @@
 package io.core9.editor.resource;
 
 import io.core9.editor.data.BlockData;
-import io.core9.editor.exception.NotFoundException;
 import io.core9.editor.model.Block;
 import io.core9.editor.model.Owner;
 

@@ -1,13 +1,12 @@
 package io.core9.editor;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import com.google.template.soy.data.SoyMapData;
 
 public class TestSoyToJson {
 
+	@SuppressWarnings("unused")
 	@Test
 	public void test() {
 		String goodJson = "{\"url\":\"http://youtu.be/kDfw4yt554g\",\"height\":\"315\",\"width\":\"560\"}";

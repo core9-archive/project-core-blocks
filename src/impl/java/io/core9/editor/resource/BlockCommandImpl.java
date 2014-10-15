@@ -4,10 +4,8 @@ import io.core9.editor.AssetsManager;
 import io.core9.editor.AssetsManagerImpl;
 import io.core9.editor.ClientRepository;
 import io.core9.editor.ClientRepositoryImpl;
-import io.core9.editor.PageParser;
 import io.core9.editor.RequestImpl;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
 import net.minidev.json.JSONObject;

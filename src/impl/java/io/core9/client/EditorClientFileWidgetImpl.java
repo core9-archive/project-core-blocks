@@ -11,6 +11,7 @@ import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
 @PluginImplementation
 public class EditorClientFileWidgetImpl implements EditorClientFileWidget {
 
+	@SuppressWarnings("unused")
 	private static final String pathPrefix = "data/editor";
 
 	@InjectPlugin
@@ -32,8 +33,9 @@ public class EditorClientFileWidgetImpl implements EditorClientFileWidget {
 
 	@Override
 	public DataHandler<?> getDataHandler() {
-
-		return null;
+		System.out.println("");
+		DataHandler<?> editorClientFileDataHandler = new EditorClientFileDataHandler();
+		return editorClientFileDataHandler;
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public class EditorClientFileWidgetImpl implements EditorClientFileWidget {
 	@Override
 	public String getId() {
 
-		return null;
+		return "editor-client-file-widget";
 	}
 
 	@Override
