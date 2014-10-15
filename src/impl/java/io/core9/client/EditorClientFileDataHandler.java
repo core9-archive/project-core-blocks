@@ -1,5 +1,6 @@
 package io.core9.client;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.core9.plugin.server.request.Request;
@@ -10,7 +11,8 @@ public class EditorClientFileDataHandler implements DataHandler<EditorClientFile
 	@Override
 	public Map<String, Object> handle(Request req) {
 
-		return null;
+		Map<String, Object> result = new HashMap<String, Object>();
+		return result ;
 	}
 
 	@Override
