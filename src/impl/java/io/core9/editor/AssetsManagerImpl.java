@@ -296,5 +296,15 @@ public class AssetsManagerImpl implements AssetsManager {
 		return  readFile(cacheFile, StandardCharsets.UTF_8);
 	}
 
+	@Override
+	public String getStaticFilePath(String filename) {
+		if(filename.startsWith("/site/assets/")){
+			return pathPrefix + "/" + getClientId() + "/site/pages/assets/" + filename.substring("/site/assets/".length()) ;
+		}else if(filename.startsWith("/site/blocks/")){
+			return pathPrefix + "/" + getClientId() + "/" + filename.substring("/site/".length()) ;
+		}
+		return pathPrefix + "/" + getClientId() + "/site/assets/";
+	}
+
 
 }

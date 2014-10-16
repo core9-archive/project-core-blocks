@@ -55,6 +55,8 @@ public interface AssetsManager {
 
 	String getCachedPage();
 
+	String getStaticFilePath(String filename);
+
 
 
 }
