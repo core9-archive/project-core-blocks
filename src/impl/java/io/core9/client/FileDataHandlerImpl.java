@@ -9,19 +9,23 @@ import io.core9.plugin.admin.plugins.AdminConfigRepository;
 import io.core9.plugin.server.request.Request;
 import io.core9.plugin.widgets.datahandler.DataHandler;
 import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
-import io.undertow.util.Headers;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
+
+import com.google.common.io.ByteStreams;
 
 @PluginImplementation
 public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfig> {
@@ -70,13 +74,33 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 
 				String file = assetsManager.getStaticFilePath(path);
 
-				// byte[] data = fileToBinary(file);
-				String data = readFileFromPath(file);
+				byte[] data = fileToBinary(file);
+				//String data = readFileFromPath(file);
 
-				req.getResponse().putHeader("Content-Type", "text/css");
-				//req.getResponse().end(data);
+				//req.getResponse().putHeader("Content-Type", "text/css");
 
-				result.put("file", data);
+				req.getResponse().putHeader("Content-Type", "image/jpeg");
+				req.getResponse().putHeader("Content-Length", Integer.toString(data.length));
+
+				InputStream res = null;
+				try {
+					res = new FileInputStream(new File(file));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+
+				try {
+					req.getResponse().sendBinary(ByteStreams.toByteArray(res));
+					res.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+
+				//result.put("file", data);
 
 				return result;
 			}
