@@ -26,6 +26,7 @@ import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
 
 import com.google.common.io.ByteStreams;
+import com.google.common.net.MediaType;
 
 @PluginImplementation
 public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfig> {
@@ -50,6 +51,7 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 		return new DataHandler<FileDataHandlerConfig>() {
 
 			private ClientRepositoryImpl clientRepository;
+			private String contentType;
 
 			@Override
 			public Map<String, Object> handle(Request req) {
@@ -72,23 +74,26 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 
 				String path = req.getPath();
 
-				String file = assetsManager.getStaticFilePath(path);
-
-				byte[] data = fileToBinary(file);
-
-				req.getResponse().putHeader("Content-Type", "text/css");
-
-				//req.getResponse().putHeader("Content-Type", "image/jpeg");
-				req.getResponse().putHeader("Content-Length", Integer.toString(data.length));
-
-				InputStream res = null;
 				try {
-					res = new FileInputStream(new File(file));
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					contentType = Files.probeContentType(Paths.get(path));
+				} catch (IOException e2) {
+					e2.printStackTrace();
 				}
 
+
+				InputStream res = fileToBinary(assetsManager.getStaticFilePath(path));
+
+				req.getResponse().putHeader("Content-Type", contentType);
+
+
+
+				//req.getResponse().putHeader("Content-Type", "image/jpeg");
+				try {
+					req.getResponse().putHeader("Content-Length", Integer.toString(res.available()));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 				try {
 					req.getResponse().sendBinary(ByteStreams.toByteArray(res));
@@ -102,26 +107,18 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 				return result;
 			}
 
-			public String readFile(String path, Charset encoding) throws IOException {
-				byte[] encoded = Files.readAllBytes(Paths.get(path));
-				return new String(encoded, encoding);
-			}
 
-			private String readFileFromPath(String file) {
+
+
+			private InputStream fileToBinary(String filename) {
+				InputStream res = null;
 				try {
-					return readFile(file, StandardCharsets.UTF_8);
-				} catch (IOException e) {
+					res = new FileInputStream(new File(filename));
+				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return null;
-			}
-
-			@SuppressWarnings("unused")
-			private byte[] fileToBinary(String filename) {
-				File file = new File(filename);
-				byte[] fileData = new byte[(int) file.length()];
-				return fileData;
+				return res;
 			}
 
 			@Override
