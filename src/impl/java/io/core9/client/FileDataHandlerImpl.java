@@ -77,31 +77,32 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 					e2.printStackTrace();
 				}
 
+				String file = assetsManager.getStaticFilePath(path);
 
-				InputStream res = fileToBinary(assetsManager.getStaticFilePath(path));
+				InputStream res = fileToBinary(file);
 
-				req.getResponse().putHeader("Content-Type", contentType);
+
 
 				try {
-					req.getResponse().putHeader("Content-Length", Integer.toString(res.available()));
+					if (new File(file).exists()) {
+						req.getResponse().putHeader("Content-Type", contentType);
+						req.getResponse().putHeader("Content-Length", Integer.toString(res.available()));
+						req.getResponse().sendBinary(ByteStreams.toByteArray(res));
+						res.close();
+					} else {
+
+						req.getResponse().setStatusCode(404);
+						req.getResponse().setStatusMessage("File not found");
+						req.getResponse().end();
+					}
 				} catch (IOException e1) {
 					e1.printStackTrace();
-				}
-
-				try {
-					req.getResponse().sendBinary(ByteStreams.toByteArray(res));
-					res.close();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 
 
 
 				return result;
 			}
-
-
-
 
 			private InputStream fileToBinary(String filename) {
 				InputStream res = null;
