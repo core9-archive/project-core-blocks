@@ -75,11 +75,10 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 				String file = assetsManager.getStaticFilePath(path);
 
 				byte[] data = fileToBinary(file);
-				//String data = readFileFromPath(file);
 
-				//req.getResponse().putHeader("Content-Type", "text/css");
+				req.getResponse().putHeader("Content-Type", "text/css");
 
-				req.getResponse().putHeader("Content-Type", "image/jpeg");
+				//req.getResponse().putHeader("Content-Type", "image/jpeg");
 				req.getResponse().putHeader("Content-Length", Integer.toString(data.length));
 
 				InputStream res = null;
@@ -95,12 +94,10 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 					req.getResponse().sendBinary(ByteStreams.toByteArray(res));
 					res.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 
-				//result.put("file", data);
 
 				return result;
 			}
