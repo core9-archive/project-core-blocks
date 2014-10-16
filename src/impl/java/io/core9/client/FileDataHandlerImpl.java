@@ -15,8 +15,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -26,7 +24,6 @@ import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
 
 import com.google.common.io.ByteStreams;
-import com.google.common.net.MediaType;
 
 @PluginImplementation
 public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfig> {
@@ -85,13 +82,9 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 
 				req.getResponse().putHeader("Content-Type", contentType);
 
-
-
-				//req.getResponse().putHeader("Content-Type", "image/jpeg");
 				try {
 					req.getResponse().putHeader("Content-Length", Integer.toString(res.available()));
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -115,7 +108,6 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 				try {
 					res = new FileInputStream(new File(filename));
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return res;
