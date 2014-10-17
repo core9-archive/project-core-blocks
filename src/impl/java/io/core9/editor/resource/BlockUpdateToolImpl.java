@@ -126,7 +126,9 @@ public class BlockUpdateToolImpl implements BlockTool {
 
 				if(meta.getAsString("state").equals("edit")){
 					String blockTemplate = meta.getAsString("template");
-					Element elem = parseSoyTemplateToElement(assetsManager.getClientId(), blockTemplate , editorData);
+					blockTemplate = blockTemplate.substring(11);
+
+					Element elem = parseSoyTemplateToElement(assetsManager.getClientId() + "/", blockTemplate , editorData);
 					block.addElement(elem);
 					parser.replaceBlock(Integer.parseInt((String) meta.get("block")), block );
 				}
