@@ -26,7 +26,7 @@ public class FileWidgetImpl implements FileWidget {
 
 	@Override
 	public String getName() {
-		return "editor_static_files";
+		return "editor static files";
 	}
 
 	@Override

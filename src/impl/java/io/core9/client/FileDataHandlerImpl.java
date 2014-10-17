@@ -35,7 +35,7 @@ public class FileDataHandlerImpl implements FileDataHandler<FileDataHandlerConfi
 
 	@Override
 	public String getName() {
-		return "Menu";
+		return "editor client file data handler";
 	}
 
 	@Override
